@@ -1,0 +1,21 @@
+settings:
+  marianSite.siteName:
+    label: 'Name der Website'
+    type: string
+    default: 'Marians Werkstatt'
+  marianSite.claim:
+    label: 'Untertitel im Kopfbereich'
+    type: string
+    default: 'Abi, Artikel, Arduino – alles an einem Ort'
+  marianSite.navigationLevels:
+    label: 'Ebenen im Hauptmenü'
+    type: int
+    default: 2
+  marianSite.footerText:
+    label: 'Text im Fußbereich'
+    type: string
+    default: 'Gebaut mit TYPO3.'
+  marianSite.imprintPid:
+    label: 'Seite mit dem Impressum'
+    type: int
+    default: 0

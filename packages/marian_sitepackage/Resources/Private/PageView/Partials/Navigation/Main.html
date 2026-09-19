@@ -1,0 +1,27 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{mainNavigation}">
+    <nav class="site-nav" aria-label="Hauptnavigation">
+        <input class="site-nav__toggle" type="checkbox" id="nav-toggle" hidden />
+        <label class="site-nav__button" for="nav-toggle">Menü</label>
+
+        <ul class="site-nav__list">
+            <f:for each="{mainNavigation}" as="item">
+                <li class="site-nav__item {f:if(condition: item.active, then: 'is-active')} {f:if(condition: item.current, then: 'is-current')}">
+                    <a class="site-nav__link" href="{item.link}" target="{item.target}"
+                       aria-current="{f:if(condition: item.current, then: 'page')}">{item.title}</a>
+
+                    <f:if condition="{item.children}">
+                        <ul class="site-nav__sub">
+                            <f:for each="{item.children}" as="child">
+                                <li class="site-nav__item site-nav__item--child {f:if(condition: child.current, then: 'is-current')}">
+                                    <a class="site-nav__link" href="{child.link}" target="{child.target}">{child.title}</a>
+                                </li>
+                            </f:for>
+                        </ul>
+                    </f:if>
+                </li>
+            </f:for>
+        </ul>
+    </nav>
+</f:if>
+</html>

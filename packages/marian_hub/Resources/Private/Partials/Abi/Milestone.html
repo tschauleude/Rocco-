@@ -1,0 +1,23 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<li class="milestone milestone--{milestone.kind} {f:if(condition: milestone.past, then: 'milestone--past')}">
+    <time class="milestone__date" datetime="{milestone.date -> f:format.date(format: 'Y-m-d')}">
+        <span class="milestone__day"><f:format.date format="d.m.">{milestone.date}</f:format.date></span>
+        <span class="milestone__year"><f:format.date format="Y">{milestone.date}</f:format.date></span>
+    </time>
+    <div class="milestone__body">
+        <h4 class="milestone__title">{milestone.title}</h4>
+        <p class="milestone__kind">{milestone.kindLabel}</p>
+        <f:if condition="{milestone.description}">
+            <p class="milestone__text">{milestone.description}</p>
+        </f:if>
+    </div>
+    <f:if condition="{milestone.past} == 0">
+        <span class="milestone__countdown">
+            <f:if condition="{milestone.daysLeft} == 0">
+                <f:then>heute</f:then>
+                <f:else>noch {milestone.daysLeft} Tage</f:else>
+            </f:if>
+        </span>
+    </f:if>
+</li>
+</html>

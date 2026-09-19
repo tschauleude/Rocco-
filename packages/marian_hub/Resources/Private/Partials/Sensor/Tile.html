@@ -1,0 +1,43 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:mh="http://typo3.org/ns/Marian/Hub/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<article class="sensor-tile {f:if(condition: tile.alert, then: 'sensor-tile--alert')} {f:if(condition: tile.online, then: 'sensor-tile--online', else: 'sensor-tile--offline')}">
+    <header class="sensor-tile__head">
+        <h3 class="sensor-tile__title">
+            <f:if condition="{detailPid}">
+                <f:then>
+                    <f:link.action action="show" arguments="{sensor: tile.sensor}" pageUid="{detailPid}">{tile.sensor.title}</f:link.action>
+                </f:then>
+                <f:else>{tile.sensor.title}</f:else>
+            </f:if>
+        </h3>
+        <span class="sensor-tile__state" title="{f:if(condition: tile.online, then: 'meldet sich regelmäßig', else: 'seit über einer Stunde still')}">
+            {f:if(condition: tile.online, then: 'online', else: 'offline')}
+        </span>
+    </header>
+
+    <p class="sensor-tile__value">{tile.latestFormatted}</p>
+
+    <f:if condition="{tile.sensor.location}">
+        <p class="sensor-tile__location">{tile.sensor.location}</p>
+    </f:if>
+
+    <mh:sparkline points="{tile.points}" width="320" height="56" label="Verlauf von {tile.sensor.title}" />
+
+    <dl class="sensor-tile__stats">
+        <div><dt>Min</dt><dd>{tile.minFormatted}</dd></div>
+        <div><dt>Ø</dt><dd>{tile.avgFormatted}</dd></div>
+        <div><dt>Max</dt><dd>{tile.maxFormatted}</dd></div>
+        <div><dt>Messungen</dt><dd>{tile.stats.count}</dd></div>
+    </dl>
+
+    <footer class="sensor-tile__foot">
+        <f:if condition="{tile.lastAt}">
+            <f:then>
+                zuletzt <f:format.date format="{settings.dateTimeFormat}">{tile.lastAt}</f:format.date> Uhr
+            </f:then>
+            <f:else>noch kein Messwert eingegangen</f:else>
+        </f:if>
+    </footer>
+</article>
+</html>

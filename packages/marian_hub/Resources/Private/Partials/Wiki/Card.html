@@ -1,0 +1,43 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<article class="card card--article">
+    <f:if condition="{article.firstCoverImage}">
+        <f:link.action action="show" arguments="{article: article}" pageUid="{detailPid}" class="card__media">
+            <f:image image="{article.firstCoverImage}" width="640c" height="360c" alt="{article.firstCoverImage.originalResource.alternative}" loading="lazy" />
+        </f:link.action>
+    </f:if>
+
+    <div class="card__body">
+        <h3 class="card__title">
+            <f:link.action action="show" arguments="{article: article}" pageUid="{detailPid}">{article.title}</f:link.action>
+        </h3>
+
+        <f:if condition="{article.subtitle}">
+            <p class="card__subtitle">{article.subtitle}</p>
+        </f:if>
+
+        <p class="card__meta">
+            <f:if condition="{article.publishedAt}">
+                <time datetime="{article.publishedAt -> f:format.date(format: 'Y-m-d')}">
+                    <f:format.date format="{settings.dateFormat}">{article.publishedAt}</f:format.date>
+                </time>
+            </f:if>
+            <span class="card__reading-time">{article.readingTime} Min. Lesezeit</span>
+            <f:if condition="{article.published} == 0">
+                <span class="badge badge--{article.status}">{article.statusLabel}</span>
+            </f:if>
+        </p>
+
+        <f:if condition="{article.teaser}">
+            <p class="card__teaser">{article.teaser -> f:format.crop(maxCharacters: 220, respectWordBoundaries: true)}</p>
+        </f:if>
+
+        <f:if condition="{article.categories}">
+            <ul class="tags">
+                <f:for each="{article.categories}" as="category">
+                    <li class="tag">{category.title}</li>
+                </f:for>
+            </ul>
+        </f:if>
+    </div>
+</article>
+</html>

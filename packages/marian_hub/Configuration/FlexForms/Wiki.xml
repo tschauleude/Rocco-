@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<T3DataStructure>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <sheetTitle>Wiki</sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.detailPid>
+                        <label>Seite mit der Artikel-Detailansicht</label>
+                        <description>Wird für Links aus Listen und aus [[Wiki-Klammern]] benutzt.</description>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.detailPid>
+                    <settings.articleLimit>
+                        <label>Höchstzahl Artikel (0 = alle)</label>
+                        <config>
+                            <type>number</type>
+                            <size>6</size>
+                            <range>
+                                <lower>0</lower>
+                            </range>
+                            <default>0</default>
+                        </config>
+                    </settings.articleLimit>
+                    <settings.category>
+                        <label>Nur dieses Thema zeigen</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>sys_category</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.category>
+                    <settings.listPid>
+                        <label>Seite mit der Artikelliste (für „Zurück“)</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.listPid>
+                    <settings.searchPid>
+                        <label>Seite mit der Suche</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.searchPid>
+                    <settings.showDesk>
+                        <label>Redaktionsliste anzeigen (Entwürfe, Recherche, Gegenlesen)</label>
+                        <config>
+                            <type>check</type>
+                            <renderType>checkboxToggle</renderType>
+                            <default>0</default>
+                        </config>
+                    </settings.showDesk>
+                </el>
+            </ROOT>
+        </sDEF>
+    </sheets>
+</T3DataStructure>

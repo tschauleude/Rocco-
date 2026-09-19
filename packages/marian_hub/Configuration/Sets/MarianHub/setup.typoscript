@@ -1,0 +1,45 @@
+plugin.tx_marianhub {
+    view {
+        templateRootPaths {
+            0 = EXT:marian_hub/Resources/Private/Templates/
+        }
+        partialRootPaths {
+            0 = EXT:marian_hub/Resources/Private/Partials/
+        }
+        layoutRootPaths {
+            0 = EXT:marian_hub/Resources/Private/Layouts/
+        }
+    }
+
+    persistence {
+        storagePid = {$marianhub.storagePid}
+        recursive = {$marianhub.storageRecursive}
+    }
+
+    settings {
+        dateFormat = {$marianhub.dateFormat}
+        dateTimeFormat = {$marianhub.dateTimeFormat}
+
+        # Fallback, falls im Plugin keine Detailseite gewählt wurde.
+        wikiDetailPid = {$marianhub.wikiDetailPid}
+        projectDetailPid = {$marianhub.projectDetailPid}
+        sensorDetailPid = {$marianhub.sensorDetailPid}
+    }
+}
+
+# Die Ausgabe der Plugins erbt die Standardpfade, damit eigene Templates
+# im Sitepackage nur noch überschrieben werden müssen.
+plugin.tx_marianhub_abi < plugin.tx_marianhub
+plugin.tx_marianhub_wiki < plugin.tx_marianhub
+plugin.tx_marianhub_projects < plugin.tx_marianhub
+plugin.tx_marianhub_sensors < plugin.tx_marianhub
+
+page {
+    includeCSS {
+        marianhub = EXT:marian_hub/Resources/Public/Css/hub.css
+    }
+    includeJSFooter {
+        marianhub = EXT:marian_hub/Resources/Public/JavaScript/hub.js
+        marianhub.defer = 1
+    }
+}

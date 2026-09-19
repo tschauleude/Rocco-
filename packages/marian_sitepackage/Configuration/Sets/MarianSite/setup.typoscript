@@ -1,0 +1,94 @@
+config {
+    doctype = html5
+    no_cache = 0
+    absRefPrefix = auto
+    disablePrefixComment = 1
+    contentObjectExceptionHandler = 0
+    sendCacheHeaders = 1
+    index_enable = 1
+    headerComment (
+      Marians Werkstatt
+    )
+}
+
+page = PAGE
+page {
+    typeNum = 0
+    shortcutIcon = EXT:marian_sitepackage/Resources/Public/Icons/favicon.svg
+
+    10 = PAGEVIEW
+    10 {
+        paths {
+            10 = EXT:marian_sitepackage/Resources/Private/PageView/
+        }
+
+        dataProcessing {
+            10 = menu
+            10 {
+                levels = {$marianSite.navigationLevels}
+                expandAll = 1
+                includeSpacer = 1
+                as = mainNavigation
+            }
+
+            20 = site
+            20 {
+                as = site
+            }
+        }
+    }
+
+    includeCSS {
+        site = EXT:marian_sitepackage/Resources/Public/Css/site.css
+    }
+
+    # Bewusst im Kopfbereich: sonst blitzt beim Laden kurz das falsche Design auf.
+    includeJS {
+        site = EXT:marian_sitepackage/Resources/Public/JavaScript/site.js
+    }
+
+    meta {
+        viewport = width=device-width, initial-scale=1
+        description.field = description
+        description.ifEmpty = {$marianSite.claim}
+        robots = index,follow
+        theme-color = #4f46e5
+    }
+}
+
+# Inhalt einer beliebigen Spalte in ein Template holen:
+# <f:cObject typoscriptObjectPath="lib.dynamicContent" data="{colPos: 10}" />
+lib.dynamicContent = COA
+lib.dynamicContent {
+    10 = LOAD_REGISTER
+    10 {
+        colPos.cObject = TEXT
+        colPos.cObject {
+            field = colPos
+            ifEmpty.cObject = TEXT
+            ifEmpty.cObject.value = 0
+        }
+    }
+
+    20 = CONTENT
+    20 {
+        table = tt_content
+        select {
+            orderBy = sorting
+            where = {#colPos}={register:colPos}
+            where.insertData = 1
+        }
+    }
+
+    90 = RESTORE_REGISTER
+}
+
+# Einstellungen, die in den Seitentemplates gebraucht werden
+lib.claim = TEXT
+lib.claim.value = {$marianSite.claim}
+
+lib.siteName = TEXT
+lib.siteName.value = {$marianSite.siteName}
+
+lib.footerText = TEXT
+lib.footerText.value = {$marianSite.footerText}

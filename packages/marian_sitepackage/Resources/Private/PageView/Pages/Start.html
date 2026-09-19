@@ -1,0 +1,24 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Content">
+    <div class="page page--start">
+        <section class="page__stage">
+            <f:cObject typoscriptObjectPath="lib.dynamicContent" data="{colPos: 10}" />
+        </section>
+
+        <div class="page__columns">
+            <section class="page__column page__column--main">
+                <f:cObject typoscriptObjectPath="lib.dynamicContent" data="{colPos: 0}" />
+            </section>
+            <aside class="page__column page__column--aside">
+                <f:cObject typoscriptObjectPath="lib.dynamicContent" data="{colPos: 1}" />
+            </aside>
+        </div>
+
+        <section class="page__wide">
+            <f:cObject typoscriptObjectPath="lib.dynamicContent" data="{colPos: 20}" />
+        </section>
+    </div>
+</f:section>
+</html>

@@ -1,0 +1,86 @@
+mod.web_layout.BackendLayouts {
+    default {
+        title = Standard (eine Spalte)
+        config {
+            backend_layout {
+                colCount = 1
+                rowCount = 1
+                rows {
+                    1 {
+                        columns {
+                            1 {
+                                name = Inhalt
+                                colPos = 0
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    start {
+        title = Startseite (Bühne + zwei Spalten)
+        config {
+            backend_layout {
+                colCount = 2
+                rowCount = 3
+                rows {
+                    1 {
+                        columns {
+                            1 {
+                                name = Bühne
+                                colPos = 10
+                                colspan = 2
+                            }
+                        }
+                    }
+                    2 {
+                        columns {
+                            1 {
+                                name = Links
+                                colPos = 0
+                            }
+                            2 {
+                                name = Rechts
+                                colPos = 1
+                            }
+                        }
+                    }
+                    3 {
+                        columns {
+                            1 {
+                                name = Unten (volle Breite)
+                                colPos = 20
+                                colspan = 2
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    wide {
+        title = Volle Breite (Dashboards)
+        config {
+            backend_layout {
+                colCount = 1
+                rowCount = 1
+                rows {
+                    1 {
+                        columns {
+                            1 {
+                                name = Inhalt über die ganze Breite
+                                colPos = 0
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+# Neue Seiten sind standardmäßig im Menü sichtbar und nutzen das Standardlayout.
+TCEMAIN.table.pages.tx_defaults.backend_layout = pagets__default

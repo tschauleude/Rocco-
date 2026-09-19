@@ -1,0 +1,40 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<article class="card card--project card--status-{project.status}">
+    <f:if condition="{project.firstCoverImage}">
+        <f:link.action action="show" arguments="{project: project}" pageUid="{detailPid}" class="card__media">
+            <f:image image="{project.firstCoverImage}" width="640c" height="360c" alt="{project.firstCoverImage.originalResource.alternative}" loading="lazy" />
+        </f:link.action>
+    </f:if>
+
+    <div class="card__body">
+        <p class="card__eyebrow"><span class="badge badge--{project.status}">{project.statusLabel}</span></p>
+
+        <h3 class="card__title">
+            <f:link.action action="show" arguments="{project: project}" pageUid="{detailPid}">{project.title}</f:link.action>
+        </h3>
+
+        <f:if condition="{project.subtitle}">
+            <p class="card__subtitle">{project.subtitle}</p>
+        </f:if>
+
+        <f:if condition="{project.teaser}">
+            <p class="card__teaser">{project.teaser -> f:format.crop(maxCharacters: 200, respectWordBoundaries: true)}</p>
+        </f:if>
+
+        <f:if condition="{project.progress} > 0">
+            <div class="progress" role="img" aria-label="Fortschritt {project.progress} Prozent">
+                <div class="progress__bar" style="width: {project.progress}%"></div>
+                <span class="progress__label">{project.progress} %</span>
+            </div>
+        </f:if>
+
+        <f:if condition="{project.categories}">
+            <ul class="tags">
+                <f:for each="{project.categories}" as="category">
+                    <li class="tag">{category.title}</li>
+                </f:for>
+            </ul>
+        </f:if>
+    </div>
+</article>
+</html>

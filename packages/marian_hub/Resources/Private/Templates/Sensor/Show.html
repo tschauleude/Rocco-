@@ -1,0 +1,96 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:mh="http://typo3.org/ns/Marian/Hub/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <article class="sensor" data-refresh="{settings.refreshSeconds}">
+        <header class="sensor__header">
+            <h1 class="sensor__title">{sensor.title}</h1>
+            <p class="sensor__meta">
+                <span class="sensor__kind">{sensor.kindLabel}</span>
+                <f:if condition="{sensor.location}">
+                    <span class="sensor__location">{sensor.location}</span>
+                </f:if>
+                <span class="sensor__state {f:if(condition: tile.online, then: 'is-online', else: 'is-offline')}">
+                    {f:if(condition: tile.online, then: 'online', else: 'offline')}
+                </span>
+            </p>
+
+            <f:if condition="{sensor.description}">
+                <p class="sensor__description">{sensor.description}</p>
+            </f:if>
+        </header>
+
+        <p class="sensor__current {f:if(condition: tile.alert, then: 'sensor__current--alert')}">
+            {tile.latestFormatted}
+            <f:if condition="{tile.alert}">
+                <span class="sensor__alert">außerhalb des Sollbereichs</span>
+            </f:if>
+        </p>
+
+        <nav class="sensor__ranges" aria-label="Zeitraum">
+            <f:for each="{ranges}" as="label" key="hours">
+                <f:link.action action="show" arguments="{sensor: sensor, range: hours}"
+                               class="sensor__range {f:if(condition: '{range} == {hours}', then: 'is-active')}">{label}</f:link.action>
+            </f:for>
+        </nav>
+
+        <figure class="sensor__chart">
+            <canvas class="chart"
+                    data-series="{tile.series}"
+                    data-unit="{sensor.unit}"
+                    data-decimals="{sensor.decimals}"
+                    data-warn-min="{sensor.warnMin}"
+                    data-warn-max="{sensor.warnMax}"
+                    height="280"
+                    role="img"
+                    aria-label="Messverlauf {sensor.title}"></canvas>
+            <noscript>
+                <mh:sparkline points="{tile.points}" width="900" height="240" label="Messverlauf {sensor.title}" />
+            </noscript>
+            <figcaption>Verlauf der letzten {ranges.{range}}</figcaption>
+        </figure>
+
+        <dl class="sensor__stats">
+            <div><dt>Minimum</dt><dd>{tile.minFormatted}</dd></div>
+            <div><dt>Mittelwert</dt><dd>{tile.avgFormatted}</dd></div>
+            <div><dt>Maximum</dt><dd>{tile.maxFormatted}</dd></div>
+            <div><dt>Messungen</dt><dd>{tile.stats.count}</dd></div>
+        </dl>
+
+        <f:if condition="{readings}">
+            <section class="sensor__table">
+                <h2>Letzte Messwerte</h2>
+                <table class="table">
+                    <thead>
+                        <tr><th>Zeitpunkt</th><th>Wert</th><th>Zusatzdaten</th></tr>
+                    </thead>
+                    <tbody>
+                        <f:for each="{readings}" as="reading">
+                            <tr>
+                                <td><f:format.date format="{settings.dateTimeFormat}">{reading.measuredAt}</f:format.date></td>
+                                <td>{reading.formattedValue}</td>
+                                <td class="sensor__payload">
+                                    <f:for each="{reading.payloadData}" as="value" key="key">
+                                        <span class="sensor__payload-item">{key}: {value}</span>
+                                    </f:for>
+                                </td>
+                            </tr>
+                        </f:for>
+                    </tbody>
+                </table>
+            </section>
+        </f:if>
+
+        <f:if condition="{sensor.project}">
+            <p class="sensor__project">
+                Gehört zum Projekt
+                <f:link.action action="show" controller="Project" arguments="{project: sensor.project}" pageUid="{settings.projectDetailPid}" extensionName="MarianHub" pluginName="Projects">
+                    {sensor.project.title}
+                </f:link.action>
+            </p>
+        </f:if>
+    </article>
+</f:section>
+</html>

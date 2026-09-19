@@ -1,0 +1,23 @@
+{
+    "name": "marian/hub",
+    "type": "typo3-cms-extension",
+    "description": "Marians Werkstatt: Abi-Organisation, Wiki/Journalismus, Sensorik und Projekte als TYPO3-Extension.",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "php": "^8.2",
+        "typo3/cms-core": "^13.4",
+        "typo3/cms-extbase": "^13.4",
+        "typo3/cms-fluid": "^13.4",
+        "typo3/cms-frontend": "^13.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Marian\\Hub\\": "Classes/"
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "marian_hub"
+        }
+    }
+}

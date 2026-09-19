@@ -1,0 +1,52 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <f:variable name="detailPid" value="{f:if(condition: settings.detailPid, then: settings.detailPid, else: settings.wikiDetailPid)}" />
+
+    <f:if condition="{settings.searchPid}">
+        <form class="wiki-search" action="{f:uri.page(pageUid: settings.searchPid)}" method="get">
+            <label class="wiki-search__label" for="wiki-search-input">Im Wiki suchen</label>
+            <input class="wiki-search__input" id="wiki-search-input" type="search" name="tx_marianhub_wiki[q]" placeholder="Stichwort, Name, Ort …" />
+            <button class="wiki-search__submit" type="submit">Suchen</button>
+        </form>
+    </f:if>
+
+    <f:if condition="{articles}">
+        <f:then>
+            <div class="grid grid--cards">
+                <f:for each="{articles}" as="article">
+                    <f:render partial="Wiki/Card" arguments="{article: article, detailPid: detailPid, settings: settings}" />
+                </f:for>
+            </div>
+        </f:then>
+        <f:else>
+            <p class="notice">Hier steht noch nichts. Der erste Artikel wartet darauf, geschrieben zu werden.</p>
+        </f:else>
+    </f:if>
+
+    <f:if condition="{showDesk}">
+        <section class="desk">
+            <h3 class="desk__title">In Arbeit</h3>
+            <f:if condition="{desk}">
+                <f:then>
+                    <ul class="desk__list">
+                        <f:for each="{desk}" as="article">
+                            <li class="desk__item">
+                                <span class="badge badge--{article.status}">{article.statusLabel}</span>
+                                <f:link.action action="show" arguments="{article: article}" pageUid="{detailPid}">{article.title}</f:link.action>
+                                <f:if condition="{article.changeNote}">
+                                    <span class="desk__note">{article.changeNote}</span>
+                                </f:if>
+                            </li>
+                        </f:for>
+                    </ul>
+                </f:then>
+                <f:else>
+                    <p class="notice notice--quiet">Kein offener Entwurf – alles veröffentlicht.</p>
+                </f:else>
+            </f:if>
+        </section>
+    </f:if>
+</f:section>
+</html>

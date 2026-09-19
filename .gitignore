@@ -1,0 +1,14 @@
+/.env
+/.idea
+/.vscode
+/vendor/
+/var/
+/public/index.php
+/public/typo3
+/public/typo3conf/ext/*
+/public/_assets
+/public/fileadmin/_processed_
+/config/system/settings.php
+/config/system/additional.php
+.phpunit.result.cache
+.php-cs-fixer.cache

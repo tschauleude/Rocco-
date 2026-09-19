@@ -1,0 +1,37 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <f:if condition="{target}">
+        <f:then>
+            <div class="countdown" data-countdown-target="{targetTimestamp}">
+                <p class="countdown__eyebrow">{target.kindLabel}</p>
+                <p class="countdown__days" data-countdown-days>{daysLeft}</p>
+                <p class="countdown__label">
+                    <f:if condition="{daysLeft} > 0">
+                        <f:then>Tage bis {target.title}</f:then>
+                        <f:else>
+                            <f:if condition="{daysLeft} == 0">
+                                <f:then>Heute ist es so weit: {target.title}</f:then>
+                                <f:else>{target.title} – das ist geschafft</f:else>
+                            </f:if>
+                        </f:else>
+                    </f:if>
+                </p>
+                <p class="countdown__date"><f:format.date format="{settings.dateFormat}">{target.date}</f:format.date></p>
+            </div>
+        </f:then>
+        <f:else>
+            <p class="notice">Noch kein Termin eingetragen. Leg im Backend einen Meilenstein an und setze den Haken "Ziel des großen Countdowns".</p>
+        </f:else>
+    </f:if>
+
+    <f:if condition="{milestones}">
+        <ol class="timeline">
+            <f:for each="{milestones}" as="milestone">
+                <f:render partial="Abi/Milestone" arguments="{milestone: milestone, settings: settings}" />
+            </f:for>
+        </ol>
+    </f:if>
+</f:section>
+</html>

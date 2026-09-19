@@ -1,0 +1,93 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <div class="abi-board">
+        <f:if condition="{countdownTarget}">
+            <div class="countdown countdown--slim">
+                <span class="countdown__days">{countdownTarget.daysLeft}</span>
+                <span class="countdown__label">Tage bis {countdownTarget.title}</span>
+            </div>
+        </f:if>
+
+        <ul class="stats">
+            <li class="stats__item">
+                <span class="stats__value">{totalTasks}</span>
+                <span class="stats__label">Aufgaben insgesamt</span>
+            </li>
+            <li class="stats__item">
+                <span class="stats__value">{doneShare} %</span>
+                <span class="stats__label">davon erledigt</span>
+            </li>
+            <li class="stats__item">
+                <span class="stats__value">{dueSoon -> f:count()}</span>
+                <span class="stats__label">bald fällig</span>
+            </li>
+            <f:if condition="{settings.showBudget}">
+                <li class="stats__item">
+                    <span class="stats__value"><f:format.number decimals="0" thousandsSeparator=".">{totalBudget}</f:format.number> €</span>
+                    <span class="stats__label">eingeplantes Budget</span>
+                </li>
+            </f:if>
+        </ul>
+
+        <f:if condition="{dueSoon -> f:count()} > 0">
+            <section class="due-soon">
+                <h3 class="due-soon__title">Das brennt als Nächstes</h3>
+                <ul class="due-soon__list">
+                    <f:for each="{dueSoon}" as="task">
+                        <li class="due-soon__item {f:if(condition: task.overdue, then: 'due-soon__item--overdue')}">
+                            <span class="due-soon__date"><f:format.date format="{settings.dateFormat}">{task.dueDate}</f:format.date></span>
+                            <span class="due-soon__task">{task.title}</span>
+                            <f:if condition="{task.committee}">
+                                <span class="due-soon__committee">{task.committee.title}</span>
+                            </f:if>
+                        </li>
+                    </f:for>
+                </ul>
+            </section>
+        </f:if>
+
+        <div class="board">
+            <f:for each="{phases}" as="phaseLabel" key="phaseKey">
+                <section class="board__column board__column--{phaseKey}">
+                    <header class="board__head">
+                        <h3 class="board__title">{phaseLabel}</h3>
+                        <span class="board__count">{counts.{phaseKey}}</span>
+                    </header>
+
+                    <div class="board__stack">
+                        <f:for each="{board.{phaseKey}}" as="task">
+                            <f:render partial="Abi/Task" arguments="{task: task, settings: settings}" />
+                        </f:for>
+
+                        <f:if condition="{counts.{phaseKey}} == 0">
+                            <p class="board__empty">Nichts hier. Angenehm ruhig.</p>
+                        </f:if>
+                    </div>
+                </section>
+            </f:for>
+        </div>
+
+        <f:if condition="{committees}">
+            <section class="committees committees--compact">
+                <h3 class="committees__title">Komitees</h3>
+                <ul class="committees__list">
+                    <f:for each="{committees}" as="committee">
+                        <li class="committee" style="--committee-color: {committee.color}">
+                            <h4 class="committee__name">{committee.title}</h4>
+                            <f:if condition="{committee.lead}">
+                                <p class="committee__lead">Leitung: {committee.lead}</p>
+                            </f:if>
+                            <div class="progress">
+                                <div class="progress__bar" style="width: {committee.progress}%"></div>
+                                <span class="progress__label">{committee.progress} %</span>
+                            </div>
+                        </li>
+                    </f:for>
+                </ul>
+            </section>
+        </f:if>
+    </div>
+</f:section>
+</html>

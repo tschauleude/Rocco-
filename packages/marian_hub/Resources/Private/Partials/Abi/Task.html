@@ -1,0 +1,29 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<article class="task task--prio{task.priority} {f:if(condition: task.overdue, then: 'task--overdue')}">
+    <h4 class="task__title">{task.title}</h4>
+
+    <f:if condition="{task.description}">
+        <p class="task__text">{task.description -> f:format.crop(maxCharacters: 160, respectWordBoundaries: true)}</p>
+    </f:if>
+
+    <ul class="task__meta">
+        <f:if condition="{task.committee}">
+            <li class="task__committee" style="--committee-color: {task.committee.color}">{task.committee.title}</li>
+        </f:if>
+        <f:if condition="{task.assignee}">
+            <li class="task__assignee">{task.assignee}</li>
+        </f:if>
+        <f:if condition="{task.dueDate}">
+            <li class="task__due">
+                <f:format.date format="{settings.dateFormat}">{task.dueDate}</f:format.date>
+                <f:if condition="{task.overdue}">
+                    <strong class="task__badge">überfällig</strong>
+                </f:if>
+            </li>
+        </f:if>
+        <f:if condition="{task.budget} > 0">
+            <li class="task__budget"><f:format.number decimals="2" decimalSeparator="," thousandsSeparator=".">{task.budget}</f:format.number> €</li>
+        </f:if>
+    </ul>
+</article>
+</html>

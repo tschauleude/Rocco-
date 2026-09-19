@@ -1,0 +1,41 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <f:variable name="detailPid" value="{f:if(condition: settings.detailPid, then: settings.detailPid, else: settings.sensorDetailPid)}" />
+
+    <div class="sensor-dashboard" data-refresh="{settings.refreshSeconds}">
+        <ul class="stats">
+            <li class="stats__item">
+                <span class="stats__value">{sensorCount}</span>
+                <span class="stats__label">Messstellen</span>
+            </li>
+            <li class="stats__item">
+                <span class="stats__value">{onlineCount}</span>
+                <span class="stats__label">senden gerade</span>
+            </li>
+            <li class="stats__item {f:if(condition: alertCount, then: 'stats__item--alert')}">
+                <span class="stats__value">{alertCount}</span>
+                <span class="stats__label">außerhalb des Sollbereichs</span>
+            </li>
+        </ul>
+
+        <f:if condition="{tiles}">
+            <f:then>
+                <div class="grid grid--tiles">
+                    <f:for each="{tiles}" as="tile">
+                        <f:render partial="Sensor/Tile" arguments="{tile: tile, detailPid: detailPid, settings: settings}" />
+                    </f:for>
+                </div>
+            </f:then>
+            <f:else>
+                <p class="notice">
+                    Noch kein Sensor angelegt. Lege im Backend einen Sensor an, erzeuge mit
+                    <code>vendor/bin/typo3 marian:sensor:token &lt;kennung&gt;</code> ein Token
+                    und lass den Arduino losschicken.
+                </p>
+            </f:else>
+        </f:if>
+    </div>
+</f:section>
+</html>

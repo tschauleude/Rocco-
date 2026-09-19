@@ -1,0 +1,22 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Marian\Hub\:
+    resource: '../Classes/*'
+    exclude: '../Classes/Domain/Model/*'
+
+  Marian\Hub\Command\SensorTokenCommand:
+    tags:
+      - name: console.command
+        command: 'marian:sensor:token'
+        description: 'Erzeugt ein neues API-Token für einen Sensor.'
+
+  Marian\Hub\Command\PurgeReadingsCommand:
+    tags:
+      - name: console.command
+        command: 'marian:sensor:purge'
+        description: 'Löscht Messwerte jenseits der Aufbewahrungsfrist.'
+        schedulable: true

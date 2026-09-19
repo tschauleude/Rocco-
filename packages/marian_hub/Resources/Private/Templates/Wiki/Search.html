@@ -1,0 +1,58 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <f:variable name="detailPid" value="{f:if(condition: settings.detailPid, then: settings.detailPid, else: settings.wikiDetailPid)}" />
+
+    <f:form class="wiki-search" action="search" method="get">
+        <label class="wiki-search__label" for="wiki-search-field">Suchbegriff</label>
+        <f:form.textfield class="wiki-search__input" id="wiki-search-field" name="q" value="{term}" type="search" placeholder="Stichwort, Name, Ort …" />
+        <f:form.button class="wiki-search__submit" type="submit">Suchen</f:form.button>
+    </f:form>
+
+    <f:if condition="{tooShort}">
+        <p class="notice notice--quiet">Bitte mindestens zwei Zeichen eingeben.</p>
+    </f:if>
+
+    <f:if condition="{results}">
+        <f:then>
+            <p class="search__summary">
+                <f:if condition="{resultCount} == 1">
+                    <f:then>Ein Treffer für „{term}“</f:then>
+                    <f:else>{resultCount} Treffer für „{term}“</f:else>
+                </f:if>
+            </p>
+
+            <ul class="search__results">
+                <f:for each="{results}" as="article">
+                    <li class="search__result">
+                        <h3 class="search__title">
+                            <f:link.action action="show" arguments="{article: article}" pageUid="{detailPid}">{article.title}</f:link.action>
+                        </h3>
+                        <p class="search__meta">
+                            {article.author}
+                            <f:if condition="{article.publishedAt}">
+                                · <f:format.date format="{settings.dateFormat}">{article.publishedAt}</f:format.date>
+                            </f:if>
+                            · {article.readingTime} Min.
+                        </p>
+                        <p class="search__teaser">
+                            <f:if condition="{article.teaser}">
+                                <f:then>{article.teaser -> f:format.crop(maxCharacters: 200, respectWordBoundaries: true)}</f:then>
+                                <f:else>{article.bodytext -> f:format.stripTags() -> f:format.crop(maxCharacters: 200, respectWordBoundaries: true)}</f:else>
+                            </f:if>
+                        </p>
+                    </li>
+                </f:for>
+            </ul>
+        </f:then>
+        <f:else>
+            <f:if condition="{term}">
+                <f:if condition="{tooShort} == 0">
+                    <p class="notice">Nichts gefunden zu „{term}“. Vielleicht ein anderes Wort?</p>
+                </f:if>
+            </f:if>
+        </f:else>
+    </f:if>
+</f:section>
+</html>

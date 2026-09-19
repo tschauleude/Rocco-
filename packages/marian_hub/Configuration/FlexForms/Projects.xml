@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<T3DataStructure>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <sheetTitle>Projekte</sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.detailPid>
+                        <label>Seite mit der Projekt-Detailansicht</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.detailPid>
+                    <settings.listPid>
+                        <label>Seite mit der Projektliste (für „Zurück“)</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.listPid>
+                    <settings.groupByStatus>
+                        <label>Nach Status gruppieren</label>
+                        <config>
+                            <type>check</type>
+                            <renderType>checkboxToggle</renderType>
+                            <default>1</default>
+                        </config>
+                    </settings.groupByStatus>
+                    <settings.category>
+                        <label>Nur dieses Thema zeigen</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>sys_category</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.category>
+                    <settings.sensorPid>
+                        <label>Seite mit dem Sensor-Dashboard</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.sensorPid>
+                </el>
+            </ROOT>
+        </sDEF>
+    </sheets>
+</T3DataStructure>

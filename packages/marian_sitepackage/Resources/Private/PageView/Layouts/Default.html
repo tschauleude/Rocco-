@@ -1,0 +1,31 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:spaceless>
+    <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+    <header class="site-header">
+        <div class="site-header__inner">
+            <a class="site-brand" href="{f:uri.page(pageUid: site.rootPageId)}">
+                <span class="site-brand__name"><f:cObject typoscriptObjectPath="lib.siteName" /></span>
+                <span class="site-brand__claim"><f:cObject typoscriptObjectPath="lib.claim" /></span>
+            </a>
+
+            <f:render partial="Navigation/Main" arguments="{mainNavigation: mainNavigation}" />
+
+            <button class="theme-toggle" type="button" data-theme-toggle aria-label="Zwischen hellem und dunklem Design wechseln">
+                <span aria-hidden="true">◐</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="site-main" id="inhalt">
+        <f:render section="Content" />
+    </main>
+
+    <footer class="site-footer">
+        <div class="site-footer__inner">
+            <p class="site-footer__text"><f:cObject typoscriptObjectPath="lib.footerText" /></p>
+            <f:render partial="Navigation/Footer" arguments="{mainNavigation: mainNavigation}" optional="true" />
+        </div>
+    </footer>
+</f:spaceless>
+</html>

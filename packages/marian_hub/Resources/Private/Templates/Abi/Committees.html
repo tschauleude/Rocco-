@@ -1,0 +1,56 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <f:if condition="{committees}">
+        <f:then>
+            <ul class="committees__list committees__list--detailed">
+                <f:for each="{committees}" as="committee">
+                    <li class="committee committee--detailed" style="--committee-color: {committee.color}">
+                        <header class="committee__head">
+                            <h3 class="committee__name">{committee.title}</h3>
+                            <f:if condition="{committee.lead}">
+                                <p class="committee__lead">Leitung: {committee.lead}</p>
+                            </f:if>
+                        </header>
+
+                        <f:if condition="{committee.description}">
+                            <p class="committee__text">{committee.description}</p>
+                        </f:if>
+
+                        <div class="progress">
+                            <div class="progress__bar" style="width: {committee.progress}%"></div>
+                            <span class="progress__label">{committee.progress} % erledigt</span>
+                        </div>
+
+                        <f:if condition="{committee.memberCount} > 0">
+                            <details class="committee__members">
+                                <summary>{committee.memberCount} Mitglieder</summary>
+                                <ul>
+                                    <f:for each="{committee.memberList}" as="member">
+                                        <li>{member}</li>
+                                    </f:for>
+                                </ul>
+                            </details>
+                        </f:if>
+
+                        <f:if condition="{committee.tasks}">
+                            <ul class="committee__tasks">
+                                <f:for each="{committee.tasks}" as="task">
+                                    <li class="committee__task committee__task--{task.phase}">
+                                        <span class="committee__task-title">{task.title}</span>
+                                        <span class="committee__task-phase">{task.phaseLabel}</span>
+                                    </li>
+                                </f:for>
+                            </ul>
+                        </f:if>
+                    </li>
+                </f:for>
+            </ul>
+        </f:then>
+        <f:else>
+            <p class="notice">Noch keine Komitees angelegt.</p>
+        </f:else>
+    </f:if>
+</f:section>
+</html>

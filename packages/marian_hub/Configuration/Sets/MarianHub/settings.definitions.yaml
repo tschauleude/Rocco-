@@ -1,0 +1,31 @@
+settings:
+  marianhub.storagePid:
+    label: 'Ordner mit den Datensätzen'
+    description: 'Seiten-ID des Ordners, in dem Aufgaben, Artikel, Sensoren und Projekte liegen.'
+    type: int
+    default: 0
+  marianhub.storageRecursive:
+    label: 'Unterordner mit einbeziehen'
+    description: 'Wie viele Ebenen unterhalb des Ordners ebenfalls durchsucht werden.'
+    type: int
+    default: 2
+  marianhub.wikiDetailPid:
+    label: 'Seite der Artikel-Detailansicht'
+    type: int
+    default: 0
+  marianhub.projectDetailPid:
+    label: 'Seite der Projekt-Detailansicht'
+    type: int
+    default: 0
+  marianhub.sensorDetailPid:
+    label: 'Seite der Sensor-Detailansicht'
+    type: int
+    default: 0
+  marianhub.dateFormat:
+    label: 'Datumsformat'
+    type: string
+    default: 'd.m.Y'
+  marianhub.dateTimeFormat:
+    label: 'Datums- und Zeitformat'
+    type: string
+    default: 'd.m.Y H:i'

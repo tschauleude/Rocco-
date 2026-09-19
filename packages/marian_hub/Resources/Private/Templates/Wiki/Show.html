@@ -1,0 +1,123 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:mh="http://typo3.org/ns/Marian/Hub/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <f:variable name="detailPid" value="{f:if(condition: settings.detailPid, then: settings.detailPid, else: settings.wikiDetailPid)}" />
+
+    <article class="article">
+        <f:if condition="{isPreview}">
+            <p class="notice notice--preview">Vorschau: Dieser Artikel ist als „{article.statusLabel}“ markiert und für Besucher nicht sichtbar.</p>
+        </f:if>
+
+        <header class="article__header">
+            <h1 class="article__title">{article.title}</h1>
+
+            <f:if condition="{article.subtitle}">
+                <p class="article__subtitle">{article.subtitle}</p>
+            </f:if>
+
+            <p class="article__meta">
+                <f:if condition="{article.author}">
+                    <span class="article__author">von {article.author}</span>
+                </f:if>
+                <f:if condition="{article.publishedAt}">
+                    <time datetime="{article.publishedAt -> f:format.date(format: 'Y-m-d')}">
+                        <f:format.date format="{settings.dateFormat}">{article.publishedAt}</f:format.date>
+                    </time>
+                </f:if>
+                <span class="article__reading-time">{article.readingTime} Min. Lesezeit</span>
+                <span class="article__revision">Fassung {article.revision}</span>
+            </p>
+
+            <f:if condition="{article.categories}">
+                <ul class="tags">
+                    <f:for each="{article.categories}" as="category">
+                        <li class="tag">{category.title}</li>
+                    </f:for>
+                </ul>
+            </f:if>
+        </header>
+
+        <f:if condition="{article.firstCoverImage}">
+            <figure class="article__figure">
+                <f:image image="{article.firstCoverImage}" width="1200" alt="{article.firstCoverImage.originalResource.alternative}" />
+                <f:if condition="{article.firstCoverImage.originalResource.description}">
+                    <figcaption>{article.firstCoverImage.originalResource.description}</figcaption>
+                </f:if>
+            </figure>
+        </f:if>
+
+        <f:if condition="{article.teaser}">
+            <p class="article__teaser">{article.teaser}</p>
+        </f:if>
+
+        <div class="article__body">
+            <mh:format.wikiText pageUid="{detailPid}">{article.bodytext}</mh:format.wikiText>
+        </div>
+
+        <f:if condition="{article.changeNote}">
+            <p class="article__changenote">Letzte Änderung: {article.changeNote}</p>
+        </f:if>
+
+        <f:if condition="{article.sources}">
+            <section class="sources">
+                <h2 class="sources__title">Quellen</h2>
+                <ol class="sources__list">
+                    <f:for each="{article.sources}" as="source">
+                        <li class="source" id="quelle-{source.uid}">
+                            <span class="source__kind">{source.kindLabel}</span>
+                            <f:if condition="{source.url}">
+                                <f:then>
+                                    <a class="source__link" href="{source.url}" rel="noopener noreferrer nofollow" target="_blank">{source.title}</a>
+                                    <f:if condition="{source.host}">
+                                        <span class="source__host">{source.host}</span>
+                                    </f:if>
+                                </f:then>
+                                <f:else>
+                                    <span class="source__title">{source.title}</span>
+                                </f:else>
+                            </f:if>
+                            <f:if condition="{source.accessedAt}">
+                                <span class="source__accessed">abgerufen am <f:format.date format="{settings.dateFormat}">{source.accessedAt}</f:format.date></span>
+                            </f:if>
+                            <f:if condition="{source.note}">
+                                <p class="source__note">{source.note}</p>
+                            </f:if>
+                        </li>
+                    </f:for>
+                </ol>
+            </section>
+        </f:if>
+
+        <f:if condition="{backlinks}">
+            <section class="backlinks">
+                <h2 class="backlinks__title">Verweist hierher</h2>
+                <ul class="backlinks__list">
+                    <f:for each="{backlinks}" as="other">
+                        <li>
+                            <f:link.action action="show" arguments="{article: other}" pageUid="{detailPid}">{other.title}</f:link.action>
+                        </li>
+                    </f:for>
+                </ul>
+            </section>
+        </f:if>
+
+        <f:if condition="{article.relatedProject}">
+            <section class="article__project">
+                <h2>Gehört zum Projekt</h2>
+                <p>
+                    <f:link.action action="show" controller="Project" arguments="{project: article.relatedProject}" pageUid="{settings.projectDetailPid}" extensionName="MarianHub" pluginName="Projects">
+                        {article.relatedProject.title}
+                    </f:link.action>
+                </p>
+            </section>
+        </f:if>
+
+        <footer class="article__footer">
+            <f:link.action action="list" pageUid="{settings.listPid}" class="article__back">Zurück zur Übersicht</f:link.action>
+        </footer>
+    </article>
+</f:section>
+</html>

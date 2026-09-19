@@ -1,0 +1,90 @@
+rootPageId: 1
+base: 'https://marian.ddev.site/'
+websiteTitle: 'Marians Werkstatt'
+dependencies:
+  - marian/site
+languages:
+  - title: Deutsch
+    enabled: true
+    languageId: 0
+    base: /
+    locale: de_DE.UTF-8
+    navigationTitle: Deutsch
+    flag: de
+    websiteTitle: 'Marians Werkstatt'
+errorHandling:
+  - errorCode: 404
+    errorHandler: Page
+    errorContentSource: 't3://page?uid=1'
+routes:
+  - route: robots.txt
+    type: staticText
+    content: |
+      User-agent: *
+      Allow: /
+routeEnhancers:
+  Wiki:
+    type: Extbase
+    extension: MarianHub
+    plugin: Wiki
+    routes:
+      - routePath: '/'
+        _controller: 'Wiki::list'
+      - routePath: '/index'
+        _controller: 'Wiki::index'
+      - routePath: '/suche'
+        _controller: 'Wiki::search'
+      - routePath: '/{article_slug}'
+        _controller: 'Wiki::show'
+        _arguments:
+          article_slug: article
+    defaultController: 'Wiki::list'
+    aspects:
+      article_slug:
+        type: PersistedAliasMapper
+        tableName: tx_marianhub_domain_model_article
+        routeFieldName: slug
+  Projects:
+    type: Extbase
+    extension: MarianHub
+    plugin: Projects
+    routes:
+      - routePath: '/'
+        _controller: 'Project::list'
+      - routePath: '/{project_slug}'
+        _controller: 'Project::show'
+        _arguments:
+          project_slug: project
+    defaultController: 'Project::list'
+    aspects:
+      project_slug:
+        type: PersistedAliasMapper
+        tableName: tx_marianhub_domain_model_project
+        routeFieldName: slug
+  Sensors:
+    type: Extbase
+    extension: MarianHub
+    plugin: Sensors
+    routes:
+      - routePath: '/'
+        _controller: 'Sensor::dashboard'
+      - routePath: '/{sensor_slug}'
+        _controller: 'Sensor::show'
+        _arguments:
+          sensor_slug: sensor
+      - routePath: '/{sensor_slug}/zeitraum/{range}'
+        _controller: 'Sensor::show'
+        _arguments:
+          sensor_slug: sensor
+    defaultController: 'Sensor::dashboard'
+    aspects:
+      sensor_slug:
+        type: PersistedAliasMapper
+        tableName: tx_marianhub_domain_model_sensor
+        routeFieldName: identifier
+      range:
+        type: StaticValueMapper
+        map:
+          24h: 24
+          7t: 168
+          30t: 720

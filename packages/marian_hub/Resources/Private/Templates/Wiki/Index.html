@@ -1,0 +1,37 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <f:variable name="detailPid" value="{f:if(condition: settings.detailPid, then: settings.detailPid, else: settings.wikiDetailPid)}" />
+
+    <p class="index__summary">{total} Artikel im Register</p>
+
+    <f:if condition="{initials}">
+        <nav class="index__nav" aria-label="Anfangsbuchstaben">
+            <f:for each="{initials}" as="initial">
+                <a class="index__jump" href="#buchstabe-{initial}">{initial}</a>
+            </f:for>
+        </nav>
+    </f:if>
+
+    <f:for each="{groups}" as="articles" key="initial">
+        <section class="index__group" id="buchstabe-{initial}">
+            <h3 class="index__letter">{initial}</h3>
+            <ul class="index__list">
+                <f:for each="{articles}" as="article">
+                    <li class="index__item">
+                        <f:link.action action="show" arguments="{article: article}" pageUid="{detailPid}">{article.title}</f:link.action>
+                        <f:if condition="{article.subtitle}">
+                            <span class="index__subtitle">{article.subtitle}</span>
+                        </f:if>
+                    </li>
+                </f:for>
+            </ul>
+        </section>
+    </f:for>
+
+    <f:if condition="{total} == 0">
+        <p class="notice">Noch keine veröffentlichten Artikel.</p>
+    </f:if>
+</f:section>
+</html>

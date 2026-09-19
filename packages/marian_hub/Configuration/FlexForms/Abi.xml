@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<T3DataStructure>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <sheetTitle>Abi-Orga</sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.dueSoonDays>
+                        <label>"Bald fällig" heißt: innerhalb von … Tagen</label>
+                        <config>
+                            <type>number</type>
+                            <size>6</size>
+                            <range>
+                                <lower>1</lower>
+                                <upper>365</upper>
+                            </range>
+                            <default>14</default>
+                        </config>
+                    </settings.dueSoonDays>
+                    <settings.milestoneLimit>
+                        <label>Höchstzahl angezeigter Termine</label>
+                        <config>
+                            <type>number</type>
+                            <size>6</size>
+                            <range>
+                                <lower>1</lower>
+                                <upper>100</upper>
+                            </range>
+                            <default>12</default>
+                        </config>
+                    </settings.milestoneLimit>
+                    <settings.showBudget>
+                        <label>Budgetsumme anzeigen</label>
+                        <config>
+                            <type>check</type>
+                            <renderType>checkboxToggle</renderType>
+                            <default>1</default>
+                        </config>
+                    </settings.showBudget>
+                </el>
+            </ROOT>
+        </sDEF>
+    </sheets>
+</T3DataStructure>

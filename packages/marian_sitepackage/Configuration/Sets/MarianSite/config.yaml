@@ -1,0 +1,4 @@
+name: marian/site
+label: 'Marians Werkstatt – Website'
+dependencies:
+  - marian/hub

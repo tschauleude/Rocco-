@@ -1,0 +1,135 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <article class="project">
+        <header class="project__header">
+            <p class="project__eyebrow"><span class="badge badge--{project.status}">{project.statusLabel}</span></p>
+            <h1 class="project__title">{project.title}</h1>
+
+            <f:if condition="{project.subtitle}">
+                <p class="project__subtitle">{project.subtitle}</p>
+            </f:if>
+
+            <ul class="project__facts">
+                <f:if condition="{project.startedAt}">
+                    <li><span class="project__fact-label">Start</span> <f:format.date format="{settings.dateFormat}">{project.startedAt}</f:format.date></li>
+                </f:if>
+                <f:if condition="{project.finishedAt}">
+                    <li><span class="project__fact-label">Fertig</span> <f:format.date format="{settings.dateFormat}">{project.finishedAt}</f:format.date></li>
+                </f:if>
+                <f:if condition="{hoursSpent} > 0">
+                    <li><span class="project__fact-label">Zeit</span> <f:format.number decimals="1" decimalSeparator="," thousandsSeparator=".">{hoursSpent}</f:format.number> h</li>
+                </f:if>
+                <f:if condition="{project.repositoryUrl}">
+                    <li><a class="project__repo" href="{project.repositoryUrl}" rel="noopener noreferrer" target="_blank">Code &amp; Doku</a></li>
+                </f:if>
+            </ul>
+
+            <f:if condition="{project.progress} > 0">
+                <div class="progress progress--large">
+                    <div class="progress__bar" style="width: {project.progress}%"></div>
+                    <span class="progress__label">{project.progress} %</span>
+                </div>
+            </f:if>
+        </header>
+
+        <f:if condition="{project.firstCoverImage}">
+            <figure class="project__figure">
+                <f:image image="{project.firstCoverImage}" width="1200" alt="{project.firstCoverImage.originalResource.alternative}" />
+            </figure>
+        </f:if>
+
+        <f:if condition="{project.description}">
+            <div class="project__body">
+                <f:format.html>{project.description}</f:format.html>
+            </div>
+        </f:if>
+
+        <f:if condition="{sensors}">
+            <section class="project__sensors">
+                <h2>Sensoren an diesem Projekt</h2>
+                <ul class="project__sensor-list">
+                    <f:for each="{sensors}" as="entry">
+                        <li class="project__sensor {f:if(condition: entry.online, then: 'is-online', else: 'is-offline')}">
+                            <f:if condition="{settings.sensorPid}">
+                                <f:then>
+                                    <f:link.action action="show" controller="Sensor" arguments="{sensor: entry.sensor}" pageUid="{settings.sensorPid}" extensionName="MarianHub" pluginName="Sensors">
+                                        {entry.sensor.title}
+                                    </f:link.action>
+                                </f:then>
+                                <f:else>{entry.sensor.title}</f:else>
+                            </f:if>
+                            <span class="project__sensor-value">{entry.latestFormatted}</span>
+                            <f:if condition="{entry.lastAt}">
+                                <span class="project__sensor-time"><f:format.date format="{settings.dateTimeFormat}">{entry.lastAt}</f:format.date></span>
+                            </f:if>
+                        </li>
+                    </f:for>
+                </ul>
+            </section>
+        </f:if>
+
+        <f:if condition="{materials}">
+            <section class="project__materials">
+                <h2>Stückliste</h2>
+                <table class="table">
+                    <thead>
+                        <tr><th>Bauteil</th><th>Anzahl</th><th>Preis</th></tr>
+                    </thead>
+                    <tbody>
+                        <f:for each="{materials}" as="row">
+                            <tr>
+                                <td>{row.part}</td>
+                                <td>{row.amount}</td>
+                                <td>{row.price}</td>
+                            </tr>
+                        </f:for>
+                    </tbody>
+                </table>
+            </section>
+        </f:if>
+
+        <f:if condition="{project.logEntries}">
+            <section class="logbook">
+                <h2 class="logbook__title">Logbuch</h2>
+                <ol class="logbook__list">
+                    <f:for each="{project.logEntries}" as="entry">
+                        <li class="logbook__entry logbook__entry--{entry.mood}">
+                            <header class="logbook__head">
+                                <h3 class="logbook__entry-title">{entry.title}</h3>
+                                <f:if condition="{entry.entryDate}">
+                                    <time class="logbook__date" datetime="{entry.entryDate -> f:format.date(format: 'Y-m-d')}">
+                                        <f:format.date format="{settings.dateFormat}">{entry.entryDate}</f:format.date>
+                                    </time>
+                                </f:if>
+                            </header>
+                            <f:if condition="{entry.bodytext}">
+                                <p class="logbook__text"><f:format.nl2br>{entry.bodytext}</f:format.nl2br></p>
+                            </f:if>
+                            <p class="logbook__meta">
+                                <span class="logbook__mood">{entry.moodLabel}</span>
+                                <f:if condition="{entry.hoursSpent} > 0">
+                                    <span class="logbook__hours"><f:format.number decimals="1" decimalSeparator="," thousandsSeparator=".">{entry.hoursSpent}</f:format.number> h</span>
+                                </f:if>
+                            </p>
+                        </li>
+                    </f:for>
+                </ol>
+            </section>
+        </f:if>
+
+        <f:if condition="{project.categories}">
+            <ul class="tags">
+                <f:for each="{project.categories}" as="category">
+                    <li class="tag">{category.title}</li>
+                </f:for>
+            </ul>
+        </f:if>
+
+        <footer class="project__footer">
+            <f:link.action action="list" pageUid="{settings.listPid}" class="project__back">Alle Projekte</f:link.action>
+        </footer>
+    </article>
+</f:section>
+</html>
