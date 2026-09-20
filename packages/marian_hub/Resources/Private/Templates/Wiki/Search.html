@@ -4,11 +4,12 @@
 <f:section name="Main">
     <f:variable name="detailPid" value="{f:if(condition: settings.detailPid, then: settings.detailPid, else: settings.wikiDetailPid)}" />
 
-    <f:form class="wiki-search" action="search" method="get">
+    <form class="wiki-search" action="{f:uri.page()}" method="get">
         <label class="wiki-search__label" for="wiki-search-field">Suchbegriff</label>
-        <f:form.textfield class="wiki-search__input" id="wiki-search-field" name="q" value="{term}" type="search" placeholder="Stichwort, Name, Ort …" />
-        <f:form.button class="wiki-search__submit" type="submit">Suchen</f:form.button>
-    </f:form>
+        <input class="wiki-search__input" id="wiki-search-field" type="search"
+               name="tx_marianhub_wiki[q]" value="{term}" placeholder="Stichwort, Name, Ort …" />
+        <button class="wiki-search__submit" type="submit">Suchen</button>
+    </form>
 
     <f:if condition="{tooShort}">
         <p class="notice notice--quiet">Bitte mindestens zwei Zeichen eingeben.</p>

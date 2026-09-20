@@ -126,6 +126,12 @@ composer ci:php:stan     # statische Analyse
 composer ci:php:cs       # Codestil prüfen
 ```
 
+Die Modelle der Extension liegen im Namespace `Marian\Hub`, die Tabellen heißen nach
+dem Extension-Key `tx_marianhub_*`. Weil Extbase den Tabellennamen sonst aus dem
+Namespace ableiten würde, steht die Zuordnung ausdrücklich in
+`packages/marian_hub/Configuration/Extbase/Persistence/Classes.php`. Wer ein Modell
+hinzufügt, trägt es dort mit ein.
+
 Die Seite ist einsprachig (Deutsch) aufgesetzt. Für weitere Sprachen brauchen die
 Tabellen in `packages/marian_hub/ext_tables.sql` die üblichen Übersetzungsfelder und
 die TCA-Dateien die passenden `ctrl`-Einträge.

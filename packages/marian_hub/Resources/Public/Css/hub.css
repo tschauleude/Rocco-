@@ -185,8 +185,21 @@
     place-items: center;
     font-size: .75rem;
     font-weight: 600;
-    mix-blend-mode: difference;
-    color: #fff;
+    color: var(--mh-text);
+}
+
+/* Kleiner Chip hinter der Zahl: liest sich sowohl über dem gefüllten
+   als auch über dem leeren Teil des Balkens. */
+.progress__label::before {
+    content: '';
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: 3.2rem;
+    height: .95rem;
+    transform: translate(-50%, -50%);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--mh-bg) 78%, transparent);
+    z-index: -1;
 }
 
 .stats {
@@ -835,10 +848,24 @@
     font-size: .75rem;
 }
 
+.source__link,
+.source__title {
+    margin-right: .4rem;
+}
+
 .source__host,
 .source__accessed {
+    margin-right: .4rem;
     color: var(--mh-text-muted);
     font-size: .8rem;
+}
+
+.source__host::before {
+    content: '(';
+}
+
+.source__host::after {
+    content: ')';
 }
 
 .source__note {
@@ -1021,8 +1048,10 @@
 .sensor-tile__stats,
 .sensor__stats {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: .4rem;
+    /* Lange Werte wie "1.190 ppm" sollen umbrechen dürfen, statt in einer
+       zu engen Spalte zu zerbrechen. */
+    grid-template-columns: repeat(auto-fit, minmax(4.5rem, 1fr));
+    gap: .4rem .6rem;
     margin: 0;
     font-size: .8rem;
 }
@@ -1045,6 +1074,7 @@
     margin: 0;
     font-weight: 600;
     font-variant-numeric: tabular-nums;
+    white-space: nowrap;
 }
 
 .sensor-tile__foot {
@@ -1247,10 +1277,6 @@
 @media (max-width: 40rem) {
     .index__list {
         columns: 1;
-    }
-
-    .sensor-tile__stats {
-        grid-template-columns: repeat(2, 1fr);
     }
 
     .board {

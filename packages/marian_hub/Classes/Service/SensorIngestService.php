@@ -52,7 +52,7 @@ class SensorIngestService
         $token = $headerToken !== '' ? $headerToken : (string)($payload['token'] ?? '');
         $sensor = $this->authenticate($identifier, $token);
 
-        $readings = $this->extractReadings($payload);
+        ['readings' => $readings, 'rejected' => $rejected] = $this->extractReadings($payload);
         if ($readings === []) {
             throw new IngestException('Kein gültiger Messwert übermittelt.', 400);
         }
@@ -63,7 +63,9 @@ class SensorIngestService
         return [
             'sensor' => $identifier,
             'stored' => $stored,
-            'skipped' => count($readings) - $stored,
+            // Verworfene Werte gehören in die Antwort: sonst sucht man auf dem
+            // Gerät nach einem Fehler, den der Server längst gemeldet hat.
+            'skipped' => $rejected + (count($readings) - $stored),
         ];
     }
 
@@ -113,7 +115,7 @@ class SensorIngestService
      * Holt die Messwerte aus dem Payload – Einzelwert oder Liste.
      *
      * @param array<string, mixed> $payload
-     * @return array<int, array{value: float, measuredAt: int, payload: string}>
+     * @return array{readings: array<int, array{value: float, measuredAt: int, payload: string}>, rejected: int}
      * @throws IngestException
      */
     private function extractReadings(array $payload): array
@@ -135,18 +137,22 @@ class SensorIngestService
         }
 
         $readings = [];
+        $rejected = 0;
         foreach ($raw as $entry) {
             if (!is_array($entry) || !array_key_exists('value', $entry)) {
+                $rejected++;
                 continue;
             }
 
             $value = $entry['value'];
             if (!is_numeric($value)) {
+                $rejected++;
                 continue;
             }
 
             $value = (float)$value;
             if (!is_finite($value)) {
+                $rejected++;
                 continue;
             }
 
@@ -168,7 +174,7 @@ class SensorIngestService
             ];
         }
 
-        return $readings;
+        return ['readings' => $readings, 'rejected' => $rejected];
     }
 
     /**

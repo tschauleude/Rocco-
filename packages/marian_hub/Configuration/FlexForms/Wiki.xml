@@ -6,6 +6,28 @@
                 <sheetTitle>Wiki</sheetTitle>
                 <type>array</type>
                 <el>
+                    <settings.view>
+                        <label>Welche Ansicht zeigt dieses Plugin</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items>
+                                <numIndex index="0">
+                                    <label>Artikelliste</label>
+                                    <value>list</value>
+                                </numIndex>
+                                <numIndex index="1">
+                                    <label>Alphabetisches Register</label>
+                                    <value>index</value>
+                                </numIndex>
+                                <numIndex index="2">
+                                    <label>Suche</label>
+                                    <value>search</value>
+                                </numIndex>
+                            </items>
+                            <default>list</default>
+                        </config>
+                    </settings.view>
                     <settings.detailPid>
                         <label>Seite mit der Artikel-Detailansicht</label>
                         <description>Wird für Links aus Listen und aus [[Wiki-Klammern]] benutzt.</description>

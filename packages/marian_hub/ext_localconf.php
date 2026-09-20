@@ -59,3 +59,8 @@ ExtensionUtility::configurePlugin(
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
+
+// Ein GET-Formular ersetzt beim Absenden die komplette Query-String – der beim
+// Erzeugen angehängte cHash geht dabei verloren. Ohne diese Ausnahme antwortet
+// TYPO3 auf jede abgeschickte Suche mit 404.
+$GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_marianhub_wiki[q]';

@@ -26,6 +26,11 @@ class AbiController extends AbstractHubController
      */
     public function boardAction(): ResponseInterface
     {
+        $forward = $this->forwardToSelectedView(['countdown', 'committees'], 'board');
+        if ($forward !== null) {
+            return $forward;
+        }
+
         $board = $this->taskRepository->findGroupedByPhase();
         $counts = array_map('count', $board);
         $total = array_sum($counts);

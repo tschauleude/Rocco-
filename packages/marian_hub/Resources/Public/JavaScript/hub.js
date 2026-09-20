@@ -143,12 +143,13 @@
             ctx.restore();
         });
 
-        // Zeitachse
-        ctx.textAlign = 'center';
+        // Zeitachse. Die äußeren Beschriftungen werden nach innen ausgerichtet,
+        // sonst ragt die letzte über den Rand hinaus und wird abgeschnitten.
         ctx.textBaseline = 'top';
         var timeLabels = 4;
         for (var t = 0; t <= timeLabels; t++) {
             var time = minTime + timeSpan * (t / timeLabels);
+            ctx.textAlign = t === 0 ? 'left' : (t === timeLabels ? 'right' : 'center');
             ctx.fillStyle = muted;
             ctx.fillText(formatTime(time, spanHours), toX(time), height - padding.bottom + 8);
         }

@@ -1,0 +1,13 @@
+marianhub:
+  storagePid: 12
+  storageRecursive: 2
+  wikiDetailPid: 7
+  projectDetailPid: 9
+  sensorDetailPid: 11
+  dateFormat: 'd.m.Y'
+  dateTimeFormat: 'd.m.Y H:i'
+marianSite:
+  siteName: 'Marians Werkstatt'
+  claim: 'Abi, Artikel, Arduino – alles an einem Ort'
+  navigationLevels: 2
+  footerText: 'Marians Werkstatt – gebaut mit TYPO3.'

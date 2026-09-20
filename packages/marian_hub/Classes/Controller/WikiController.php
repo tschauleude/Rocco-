@@ -22,6 +22,11 @@ class WikiController extends AbstractHubController
      */
     public function listAction(int $category = 0): ResponseInterface
     {
+        $forward = $this->forwardToSelectedView(['index', 'search'], 'list');
+        if ($forward !== null) {
+            return $forward;
+        }
+
         $this->view->assignMultiple([
             'articles' => $this->articleRepository->findPublished(
                 $this->intSetting('articleLimit', 0),

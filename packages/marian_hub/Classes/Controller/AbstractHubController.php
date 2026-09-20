@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Marian\Hub\Controller;
 
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Frontend\Controller\ErrorController;
 
@@ -23,6 +25,25 @@ abstract class AbstractHubController extends ActionController
             ->pageNotFoundAction($this->request, $message);
 
         throw new PropagateResponseException($response, 1_726_000_001);
+    }
+
+    /**
+     * Leitet auf die im Plugin gewählte Ansicht um.
+     *
+     * Die Standardaktion eines Plugins ist immer dieselbe; welche Ansicht ein
+     * Redakteur sehen will, steht im FlexForm. Alles außer den erlaubten Werten
+     * wird ignoriert, damit die Einstellung keine fremden Aktionen aufrufen kann.
+     *
+     * @param string[] $allowed Aktionen, auf die umgeleitet werden darf
+     */
+    protected function forwardToSelectedView(array $allowed, string $current): ?ResponseInterface
+    {
+        $view = (string)($this->settings['view'] ?? '');
+        if ($view === '' || $view === $current || !in_array($view, $allowed, true)) {
+            return null;
+        }
+
+        return new ForwardResponse($view);
     }
 
     /**

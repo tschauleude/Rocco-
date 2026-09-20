@@ -8,6 +8,10 @@
 /public/typo3conf/ext/*
 /public/_assets
 /public/fileadmin/_processed_
+/public/fileadmin/_temp_/
+/public/fileadmin/.htaccess
+/public/fileadmin/user_upload/
+/public/typo3temp/
 /config/system/settings.php
 /config/system/additional.php
 .phpunit.result.cache

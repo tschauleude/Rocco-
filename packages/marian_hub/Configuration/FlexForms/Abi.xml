@@ -6,6 +6,28 @@
                 <sheetTitle>Abi-Orga</sheetTitle>
                 <type>array</type>
                 <el>
+                    <settings.view>
+                        <label>Welche Ansicht zeigt dieses Plugin</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items>
+                                <numIndex index="0">
+                                    <label>Aufgaben-Board</label>
+                                    <value>board</value>
+                                </numIndex>
+                                <numIndex index="1">
+                                    <label>Countdown und Termine</label>
+                                    <value>countdown</value>
+                                </numIndex>
+                                <numIndex index="2">
+                                    <label>Komitees</label>
+                                    <value>committees</value>
+                                </numIndex>
+                            </items>
+                            <default>board</default>
+                        </config>
+                    </settings.view>
                     <settings.dueSoonDays>
                         <label>"Bald fällig" heißt: innerhalb von … Tagen</label>
                         <config>
