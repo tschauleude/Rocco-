@@ -53,7 +53,7 @@ CREATE TABLE tx_marianhub_domain_model_article (
     cover_image int(11) unsigned DEFAULT '0' NOT NULL,
     related_project int(11) unsigned DEFAULT '0' NOT NULL,
 
-    KEY slug (slug(191)),
+    KEY slug (slug),
     KEY status (status, deleted, hidden)
 );
 
@@ -118,7 +118,7 @@ CREATE TABLE tx_marianhub_domain_model_project (
     categories int(11) unsigned DEFAULT '0' NOT NULL,
     log_entries int(11) unsigned DEFAULT '0' NOT NULL,
 
-    KEY slug (slug(191)),
+    KEY slug (slug),
     KEY status (status, deleted, hidden)
 );
 

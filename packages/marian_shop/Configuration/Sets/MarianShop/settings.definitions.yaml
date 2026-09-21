@@ -1,0 +1,47 @@
+settings:
+  marianshop.storagePid:
+    label: 'Ordner für Bestellungen, Adressen und Konten'
+    description: 'Hier landen alle Datensätze, die im Betrieb entstehen.'
+    type: int
+    default: 0
+  marianshop.catalogPid:
+    label: 'Ordner mit den Artikeln'
+    type: int
+    default: 0
+  marianshop.customerGroup:
+    label: 'Benutzergruppe neuer Kundenkonten'
+    description: 'Seiten-ID der Frontend-Benutzergruppe, in die Registrierungen kommen.'
+    type: int
+    default: 0
+  marianshop.shopPid:
+    label: 'Seite mit der Artikelliste'
+    type: int
+    default: 0
+  marianshop.productDetailPid:
+    label: 'Seite mit der Artikeldetailansicht'
+    type: int
+    default: 0
+  marianshop.cartPid:
+    label: 'Seite mit dem Warenkorb'
+    type: int
+    default: 0
+  marianshop.checkoutPid:
+    label: 'Seite mit der Kasse'
+    type: int
+    default: 0
+  marianshop.accountPid:
+    label: 'Seite mit dem Kundenkonto'
+    type: int
+    default: 0
+  marianshop.termsPid:
+    label: 'Seite mit den AGB'
+    type: int
+    default: 0
+  marianshop.withdrawalPid:
+    label: 'Seite mit der Widerrufsbelehrung'
+    type: int
+    default: 0
+  marianshop.privacyPid:
+    label: 'Seite mit der Datenschutzerklärung'
+    type: int
+    default: 0

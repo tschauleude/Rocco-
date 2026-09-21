@@ -1,0 +1,14 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:section name="Main">
+Bitte bestätige dein Kundenkonto
+
+Hallo {customer.displayName},
+bitte bestätige dein Kundenkonto bei {shopName} über diesen Link:
+
+{confirmUrl}
+
+Der Link gilt 48 Stunden.
+
+Du hast kein Konto angelegt? Dann ignoriere diese Mail — ohne Bestätigung passiert nichts.
+</f:section>
+</html>

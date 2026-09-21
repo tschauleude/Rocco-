@@ -1,0 +1,74 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Subject">Deine Bestellung {order.orderNumber}</f:section>
+
+<f:section name="Main">
+    <h1 style="font-size:22px;margin:0 0 12px;">Danke für deine Bestellung</h1>
+
+    <p style="margin:0 0 16px;">
+        Hallo {order.billingAddress.fullName},<br />
+        wir haben deine Bestellung <strong>{order.orderNumber}</strong> vom
+        <f:format.date format="d.m.Y">{order.orderedAt}</f:format.date> erhalten.
+    </p>
+
+    <f:if condition="{instructions}">
+        <div style="background:#f6f7fb;border-radius:10px;padding:16px;margin:0 0 20px;">
+            <p style="margin:0 0 6px;font-weight:600;">{payment.title}</p>
+            <p style="margin:0;white-space:pre-line;">{instructions}</p>
+        </div>
+    </f:if>
+
+    <table style="width:100%;border-collapse:collapse;margin:0 0 20px;">
+        <thead>
+            <tr>
+                <th align="left" style="border-bottom:1px solid #dfe2ee;padding:6px 0;font-size:13px;">Artikel</th>
+                <th align="right" style="border-bottom:1px solid #dfe2ee;padding:6px 0;font-size:13px;">Menge</th>
+                <th align="right" style="border-bottom:1px solid #dfe2ee;padding:6px 0;font-size:13px;">Summe</th>
+            </tr>
+        </thead>
+        <tbody>
+            <f:for each="{order.items}" as="item">
+                <tr>
+                    <td style="padding:6px 0;border-bottom:1px solid #eceef6;">{item.fullTitle}</td>
+                    <td align="right" style="padding:6px 0;border-bottom:1px solid #eceef6;">{item.quantity}</td>
+                    <td align="right" style="padding:6px 0;border-bottom:1px solid #eceef6;">{item.formattedLineTotal}</td>
+                </tr>
+            </f:for>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2" align="right" style="padding:6px 0;">Zwischensumme</td>
+                <td align="right" style="padding:6px 0;">{order.formattedSubtotal}</td>
+            </tr>
+            <tr>
+                <td colspan="2" align="right" style="padding:6px 0;">Versand ({order.shippingTitle})</td>
+                <td align="right" style="padding:6px 0;">{order.formattedShipping}</td>
+            </tr>
+            <tr>
+                <td colspan="2" align="right" style="padding:8px 0;font-weight:700;border-top:2px solid #171a26;">Gesamtsumme</td>
+                <td align="right" style="padding:8px 0;font-weight:700;border-top:2px solid #171a26;">{order.formattedTotal}</td>
+            </tr>
+            <tr>
+                <td colspan="3" align="right" style="padding:2px 0;font-size:12px;color:#5d6478;">
+                    darin enthaltene Umsatzsteuer: {order.formattedTax}
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <p style="margin:0 0 6px;font-weight:600;">Rechnungsanschrift</p>
+    <p style="margin:0 0 20px;">
+        <f:if condition="{order.billingAddress.company}">{order.billingAddress.company}<br /></f:if>
+        {order.billingAddress.fullName}<br />
+        {order.billingAddress.street} {order.billingAddress.houseNumber}<br />
+        {order.billingAddress.zip} {order.billingAddress.city}
+    </p>
+
+    <f:if condition="{orderUrl}">
+        <p style="margin:0 0 16px;">
+            <a href="{orderUrl}" style="color:#4f46e5;">Bestellung online ansehen</a>
+        </p>
+    </f:if>
+</f:section>
+</html>

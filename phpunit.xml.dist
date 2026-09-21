@@ -10,11 +10,13 @@
     <testsuites>
         <testsuite name="Unit">
             <directory>packages/marian_hub/Tests/Unit/</directory>
+            <directory>packages/marian_shop/Tests/Unit/</directory>
         </testsuite>
     </testsuites>
     <source>
         <include>
             <directory>packages/marian_hub/Classes/</directory>
+            <directory>packages/marian_shop/Classes/</directory>
         </include>
     </source>
 </phpunit>

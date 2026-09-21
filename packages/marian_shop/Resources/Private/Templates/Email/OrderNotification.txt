@@ -1,0 +1,15 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:section name="Main">
+Neue Bestellung {order.orderNumber} über {order.formattedTotal}
+
+{order.billingAddress.fullName} — {order.email}
+Zahlung: {order.paymentTitle}
+Versand: {order.shippingTitle}
+
+<f:for each="{order.items}" as="item">{item.quantity} x {item.fullTitle} ({item.formattedLineTotal})
+</f:for>
+<f:if condition="{order.customerNote}">
+Nachricht: {order.customerNote}
+</f:if>
+</f:section>
+</html>

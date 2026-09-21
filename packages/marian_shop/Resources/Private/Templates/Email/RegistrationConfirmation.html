@@ -1,0 +1,30 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Subject">Bitte bestätige dein Kundenkonto</f:section>
+
+<f:section name="Main">
+    <h1 style="font-size:22px;margin:0 0 12px;">Nur noch ein Klick</h1>
+
+    <p style="margin:0 0 16px;">
+        Hallo {customer.displayName},<br />
+        bitte bestätige dein Kundenkonto bei {shopName}.
+    </p>
+
+    <p style="margin:0 0 20px;">
+        <a href="{confirmUrl}" style="display:inline-block;background:#4f46e5;color:#ffffff;text-decoration:none;padding:12px 20px;border-radius:8px;font-weight:600;">
+            Konto bestätigen
+        </a>
+    </p>
+
+    <p style="margin:0 0 16px;font-size:13px;color:#5d6478;">
+        Der Link gilt 48 Stunden. Falls der Knopf nicht funktioniert:<br />
+        <span style="word-break:break-all;">{confirmUrl}</span>
+    </p>
+
+    <p style="margin:0;font-size:13px;color:#5d6478;">
+        Du hast kein Konto angelegt? Dann ignoriere diese Mail einfach –
+        ohne Bestätigung passiert nichts.
+    </p>
+</f:section>
+</html>

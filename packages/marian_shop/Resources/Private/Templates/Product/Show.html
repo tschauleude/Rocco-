@@ -1,0 +1,103 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:s="http://typo3.org/ns/Marian/Shop/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <article class="product">
+        <div class="product__media">
+            <f:if condition="{product.images}">
+                <f:then>
+                    <f:for each="{product.images}" as="image" iteration="i">
+                        <figure class="product__image {f:if(condition: i.isFirst, then: 'product__image--main')}">
+                            <f:image image="{image}" width="900" alt="{image.originalResource.alternative}" />
+                        </figure>
+                    </f:for>
+                </f:then>
+                <f:else>
+                    <div class="product__placeholder" aria-hidden="true"></div>
+                </f:else>
+            </f:if>
+        </div>
+
+        <div class="product__info">
+            <h1 class="product__title">{product.title}</h1>
+
+            <f:if condition="{product.subtitle}">
+                <p class="product__subtitle">{product.subtitle}</p>
+            </f:if>
+
+            <p class="product__price">
+                <f:if condition="{product.hasReducedPrice}">
+                    <s class="product__price-old"><f:format.number decimals="2" decimalSeparator="," thousandsSeparator=".">{product.priceOld}</f:format.number> €</s>
+                </f:if>
+                <strong><s:format.price value="{product.priceInCents}" /></strong>
+            </p>
+
+            <p class="product__tax">
+                inkl. <f:format.number decimals="0">{product.taxRate}</f:format.number> % MwSt., zzgl. Versandkosten
+            </p>
+
+            <f:if condition="{product.deliveryTime}">
+                <p class="product__delivery">Lieferzeit: {product.deliveryTime}</p>
+            </f:if>
+
+            <f:if condition="{available}">
+                <f:then>
+                    <form class="product__buy" method="post"
+                          action="{f:uri.action(action: 'add', controller: 'Cart', pageUid: settings.cartPid, extensionName: 'MarianShop', pluginName: 'Cart')}">
+                        <input type="hidden" name="tx_marianshop_cart[product]" value="{product.uid}" />
+
+                        <f:if condition="{product.hasVariants}">
+                            <div class="field">
+                                <label for="variant">Ausführung <abbr title="Pflichtfeld">*</abbr></label>
+                                <select id="variant" name="tx_marianshop_cart[variant]" required="required">
+                                    <option value="">bitte wählen</option>
+                                    <f:for each="{product.variants}" as="variant">
+                                        <option value="{variant.uid}" <f:if condition="{variant.available} == 0">disabled="disabled"</f:if>>
+                                            {variant.title}<f:if condition="{variant.available} == 0"> – ausverkauft</f:if>
+                                        </option>
+                                    </f:for>
+                                </select>
+                            </div>
+                        </f:if>
+
+                        <div class="field field--narrow">
+                            <label for="quantity">Menge</label>
+                            <input type="number" id="quantity" name="tx_marianshop_cart[quantity]"
+                                   value="1" min="1" max="{product.maxPerOrder}" inputmode="numeric" />
+                        </div>
+
+                        <button type="submit" class="button button--primary">In den Warenkorb</button>
+                    </form>
+
+                    <f:if condition="{product.lowOnStock}">
+                        <p class="product__stock product__stock--low">Nur noch {product.stockLeft} verfügbar</p>
+                    </f:if>
+                </f:then>
+                <f:else>
+                    <p class="product__stock product__stock--sold-out">Zurzeit ausverkauft.</p>
+                </f:else>
+            </f:if>
+
+            <f:if condition="{product.sku}">
+                <p class="product__sku">Artikelnummer: {product.sku}</p>
+            </f:if>
+
+            <f:if condition="{product.description}">
+                <div class="product__description">
+                    <f:format.html>{product.description}</f:format.html>
+                </div>
+            </f:if>
+
+            <f:if condition="{cart.isEmpty} == 0">
+                <p class="product__cart-hint">
+                    <f:link.page pageUid="{settings.cartPid}">
+                        Im Warenkorb: {cart.quantity} Artikel ({cart.formattedSubtotal})
+                    </f:link.page>
+                </p>
+            </f:if>
+        </div>
+    </article>
+</f:section>
+</html>

@@ -1,0 +1,40 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:s="http://typo3.org/ns/Marian/Shop/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<dl class="summary">
+    <div class="summary__row">
+        <dt>Zwischensumme</dt>
+        <dd>{totals.formattedSubtotal}</dd>
+    </div>
+
+    <div class="summary__row">
+        <dt>Versand<f:if condition="{shippingTitle}"> ({shippingTitle})</f:if></dt>
+        <dd>{totals.formattedShipping}</dd>
+    </div>
+
+    <f:if condition="{totals.hasSurcharge}">
+        <div class="summary__row">
+            <dt>Zahlungsaufschlag</dt>
+            <dd>{totals.formattedSurcharge}</dd>
+        </div>
+    </f:if>
+
+    <div class="summary__row summary__row--total">
+        <dt>Gesamtsumme</dt>
+        <dd>{totals.formattedTotal}</dd>
+    </div>
+
+    <f:for each="{totals.taxRows}" as="row" key="rate">
+        <div class="summary__row summary__row--tax">
+            <dt>davon {rate -> f:format.number(decimals: 0)} % MwSt.</dt>
+            <dd><s:format.price value="{row.tax}" /></dd>
+        </div>
+    </f:for>
+</dl>
+
+<f:if condition="{totals.freeShippingRemaining} > 0">
+    <p class="summary__hint">
+        Noch {totals.formattedFreeShippingRemaining} bis zum versandkostenfreien Einkauf.
+    </p>
+</f:if>
+</html>

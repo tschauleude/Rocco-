@@ -1,0 +1,48 @@
+plugin.tx_marianshop {
+    view {
+        templateRootPaths {
+            0 = EXT:marian_shop/Resources/Private/Templates/
+        }
+        partialRootPaths {
+            0 = EXT:marian_shop/Resources/Private/Partials/
+        }
+        layoutRootPaths {
+            0 = EXT:marian_shop/Resources/Private/Layouts/
+        }
+    }
+
+    persistence {
+        storagePid = {$marianshop.storagePid},{$marianshop.catalogPid}
+        recursive = 2
+    }
+
+    settings {
+        storagePid = {$marianshop.storagePid}
+        customerGroup = {$marianshop.customerGroup}
+        shopPid = {$marianshop.shopPid}
+        productDetailPid = {$marianshop.productDetailPid}
+        cartPid = {$marianshop.cartPid}
+        checkoutPid = {$marianshop.checkoutPid}
+        accountPid = {$marianshop.accountPid}
+        loginPid = {$marianshop.accountPid}
+        registerPid = {$marianshop.accountPid}
+        termsPid = {$marianshop.termsPid}
+        withdrawalPid = {$marianshop.withdrawalPid}
+        privacyPid = {$marianshop.privacyPid}
+    }
+}
+
+plugin.tx_marianshop_products < plugin.tx_marianshop
+plugin.tx_marianshop_cart < plugin.tx_marianshop
+plugin.tx_marianshop_checkout < plugin.tx_marianshop
+plugin.tx_marianshop_account < plugin.tx_marianshop
+
+page {
+    includeCSS {
+        marianshop = EXT:marian_shop/Resources/Public/Css/shop.css
+    }
+    includeJSFooter {
+        marianshop = EXT:marian_shop/Resources/Public/JavaScript/shop.js
+        marianshop.defer = 1
+    }
+}

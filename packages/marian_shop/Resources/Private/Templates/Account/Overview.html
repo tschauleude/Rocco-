@@ -1,0 +1,41 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <div class="account">
+        <header class="account__header">
+            <h1>Hallo {customer.displayName}</h1>
+            <a class="button button--quiet" href="?logintype=logout">Abmelden</a>
+        </header>
+
+        <f:render partial="Account/Navigation" arguments="{active: 'overview'}" />
+
+        <div class="account__tiles">
+            <section class="account__tile">
+                <h2>Bestellungen</h2>
+                <p class="account__number">{orderCount}</p>
+                <f:link.action action="orders">Alle ansehen</f:link.action>
+            </section>
+
+            <section class="account__tile">
+                <h2>Adressen</h2>
+                <p class="account__number">{addresses -> f:count()}</p>
+                <f:link.action action="addresses">Adressbuch</f:link.action>
+            </section>
+
+            <section class="account__tile">
+                <h2>Profil</h2>
+                <p class="account__detail">{customer.email}</p>
+                <f:link.action action="profile">Bearbeiten</f:link.action>
+            </section>
+        </div>
+
+        <f:if condition="{recentOrders}">
+            <section class="account__section">
+                <h2>Zuletzt bestellt</h2>
+                <f:render partial="Account/OrderList" arguments="{orders: recentOrders}" />
+            </section>
+        </f:if>
+    </div>
+</f:section>
+</html>

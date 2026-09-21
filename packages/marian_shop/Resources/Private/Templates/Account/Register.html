@@ -1,0 +1,70 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <div class="account-register">
+        <h1>Kundenkonto anlegen</h1>
+
+        <form method="post" action="{f:uri.action(action: 'createAccount')}">
+            <div class="field">
+                <label for="reg-firstName">Vorname</label>
+                <input type="text" id="reg-firstName" name="tx_marianshop_account[firstName]"
+                       value="{values.firstName}" autocomplete="given-name" />
+            </div>
+
+            <div class="field">
+                <label for="reg-lastName">Nachname</label>
+                <input type="text" id="reg-lastName" name="tx_marianshop_account[lastName]"
+                       value="{values.lastName}" autocomplete="family-name" />
+            </div>
+
+            <div class="field">
+                <label for="reg-email">E-Mail <abbr title="Pflichtfeld">*</abbr></label>
+                <input type="email" id="reg-email" name="tx_marianshop_account[email]"
+                       value="{values.email}" autocomplete="email" required="required" />
+                <f:if condition="{errors.email}">
+                    <p class="field__error">{errors.email}</p>
+                </f:if>
+            </div>
+
+            <div class="field">
+                <label for="reg-password">Passwort <abbr title="Pflichtfeld">*</abbr></label>
+                <input type="password" id="reg-password" name="tx_marianshop_account[password]"
+                       autocomplete="new-password" minlength="8" required="required" />
+                <p class="field__help">Mindestens acht Zeichen.</p>
+                <f:if condition="{errors.password}">
+                    <p class="field__error">{errors.password}</p>
+                </f:if>
+            </div>
+
+            <div class="field">
+                <label for="reg-password2">Passwort wiederholen <abbr title="Pflichtfeld">*</abbr></label>
+                <input type="password" id="reg-password2" name="tx_marianshop_account[passwordRepeat]"
+                       autocomplete="new-password" required="required" />
+                <f:if condition="{errors.passwordRepeat}">
+                    <p class="field__error">{errors.passwordRepeat}</p>
+                </f:if>
+            </div>
+
+            <div class="field field--check">
+                <input type="checkbox" id="reg-privacy" name="tx_marianshop_account[acceptPrivacy]" value="1" />
+                <label for="reg-privacy">
+                    Ich habe die
+                    <f:if condition="{privacyPid}">
+                        <f:then><f:link.page pageUid="{privacyPid}" target="_blank">Datenschutzerklärung</f:link.page></f:then>
+                        <f:else>Datenschutzerklärung</f:else>
+                    </f:if>
+                    gelesen. <abbr title="Pflichtfeld">*</abbr>
+                </label>
+            </div>
+            <f:if condition="{errors.acceptPrivacy}">
+                <p class="field__error">{errors.acceptPrivacy}</p>
+            </f:if>
+
+            <button type="submit" class="button button--primary">Konto anlegen</button>
+        </form>
+
+        <p><f:link.action action="login">Ich habe schon ein Konto</f:link.action></p>
+    </div>
+</f:section>
+</html>

@@ -1,0 +1,83 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:s="http://typo3.org/ns/Marian/Shop/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <f:if condition="{cart.isEmpty}">
+        <f:then>
+            <p class="notice">
+                Dein Warenkorb ist leer.
+                <f:if condition="{shopPid}">
+                    <f:link.page pageUid="{shopPid}">Zurück zum Shop</f:link.page>
+                </f:if>
+            </p>
+        </f:then>
+        <f:else>
+            <f:if condition="{cart.hasStockProblems}">
+                <p class="notice notice--warning">
+                    Einige Mengen sind nicht mehr verfügbar. Bitte passe sie an, bevor du zur Kasse gehst.
+                </p>
+            </f:if>
+
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Artikel</th>
+                        <th class="is-numeric">Einzelpreis</th>
+                        <th class="is-numeric">Menge</th>
+                        <th class="is-numeric">Summe</th>
+                        <th><span class="is-visually-hidden">Entfernen</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <f:for each="{cart.items}" as="item" key="key">
+                        <tr class="{f:if(condition: item.exceedsStock, then: 'cart-table__row--problem')}">
+                            <td>
+                                <f:link.action action="show" controller="Product" arguments="{product: item.product.uid}"
+                                               pageUid="{settings.productDetailPid}" extensionName="MarianShop" pluginName="Products">
+                                    {item.fullTitle}
+                                </f:link.action>
+                                <f:if condition="{item.exceedsStock}">
+                                    <p class="cart-table__problem">Nur noch {item.availableStock} verfügbar</p>
+                                </f:if>
+                            </td>
+                            <td class="is-numeric">{item.formattedUnitPrice}</td>
+                            <td class="is-numeric">
+                                <form method="post" class="cart-quantity"
+                                      action="{f:uri.action(action: 'update')}">
+                                    <input type="hidden" name="tx_marianshop_cart[item]" value="{key}" />
+                                    <label class="is-visually-hidden" for="qty-{key}">Menge für {item.fullTitle}</label>
+                                    <input type="number" id="qty-{key}" name="tx_marianshop_cart[quantity]"
+                                           value="{item.quantity}" min="0" max="99" inputmode="numeric" />
+                                    <button type="submit" class="button button--quiet">Ändern</button>
+                                </form>
+                            </td>
+                            <td class="is-numeric">{item.formattedLineTotal}</td>
+                            <td>
+                                <form method="post" action="{f:uri.action(action: 'remove')}">
+                                    <input type="hidden" name="tx_marianshop_cart[item]" value="{key}" />
+                                    <button type="submit" class="button button--quiet" aria-label="{item.fullTitle} entfernen">Entfernen</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </f:for>
+                </tbody>
+            </table>
+
+            <div class="cart-footer">
+                <f:render partial="Cart/Summary" arguments="{totals: totals, shippingTitle: shipping.title}" />
+
+                <div class="cart-actions">
+                    <f:if condition="{shopPid}">
+                        <f:link.page pageUid="{shopPid}" class="button button--quiet">Weiter stöbern</f:link.page>
+                    </f:if>
+                    <f:if condition="{cart.hasStockProblems} == 0">
+                        <f:link.page pageUid="{checkoutPid}" class="button button--primary">Zur Kasse</f:link.page>
+                    </f:if>
+                </div>
+            </div>
+        </f:else>
+    </f:if>
+</f:section>
+</html>

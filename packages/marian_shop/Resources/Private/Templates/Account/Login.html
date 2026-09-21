@@ -1,0 +1,41 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <div class="account-login">
+        <h1>Anmelden</h1>
+
+        <f:if condition="{failed}">
+            <p class="notice notice--error">
+                Anmeldung fehlgeschlagen. Bitte prüfe E-Mail-Adresse und Passwort.
+            </p>
+        </f:if>
+
+        <!--
+            Die Zugangsdaten gehen an TYPO3 selbst: Prüfung, Passwort-Hashing
+            und Sitzung übernimmt der Kern. Das requestToken trägt signiert die
+            ID des Benutzer-Ordners mit; ohne es findet TYPO3 das Konto nicht.
+        -->
+        <f:form class="login-form" fieldNamePrefix="" action="login" requestToken="{requestToken}" spellcheck="false">
+            <f:form.hidden name="logintype" value="login" />
+
+            <div class="field">
+                <label for="login-user">E-Mail</label>
+                <f:form.textfield name="user" id="login-user" required="required" autocomplete="username" />
+            </div>
+
+            <div class="field">
+                <label for="login-pass">Passwort</label>
+                <f:form.password name="pass" id="login-pass" required="required" autocomplete="current-password" />
+            </div>
+
+            <f:form.button type="submit" class="button button--primary">Anmelden</f:form.button>
+        </f:form>
+
+        <p class="account-login__register">
+            Noch kein Konto?
+            <f:link.action action="register">Jetzt registrieren</f:link.action>
+        </p>
+    </div>
+</f:section>
+</html>

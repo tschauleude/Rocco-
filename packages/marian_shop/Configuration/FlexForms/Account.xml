@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<T3DataStructure>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <sheetTitle>Kundenkonto</sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.shopPid>
+                        <label>Seite mit der Artikelliste</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.shopPid>
+                    <settings.privacyPid>
+                        <label>Seite mit der Datenschutzerklärung</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.privacyPid>
+                    <settings.customerGroup>
+                        <label>Benutzergruppe neuer Konten</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>fe_groups</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.customerGroup>
+                </el>
+            </ROOT>
+        </sDEF>
+    </sheets>
+</T3DataStructure>

@@ -1,0 +1,55 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:s="http://typo3.org/ns/Marian/Shop/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<article class="product-card {f:if(condition: '{product.availableStock} == 0', then: 'product-card--sold-out')}">
+    <f:link.action action="show" arguments="{product: product}" pageUid="{detailPid}" class="product-card__media">
+        <f:if condition="{product.firstImage}">
+            <f:then>
+                <f:image image="{product.firstImage}" width="600c" height="600c"
+                         alt="{product.firstImage.originalResource.alternative}" loading="lazy" />
+            </f:then>
+            <f:else>
+                <span class="product-card__placeholder" aria-hidden="true"></span>
+            </f:else>
+        </f:if>
+    </f:link.action>
+
+    <div class="product-card__body">
+        <h3 class="product-card__title">
+            <f:link.action action="show" arguments="{product: product}" pageUid="{detailPid}">{product.title}</f:link.action>
+        </h3>
+
+        <f:if condition="{product.subtitle}">
+            <p class="product-card__subtitle">{product.subtitle}</p>
+        </f:if>
+
+        <p class="product-card__price">
+            <f:if condition="{product.hasReducedPrice}">
+                <s class="product-card__price-old"><f:format.number decimals="2" decimalSeparator="," thousandsSeparator=".">{product.priceOld}</f:format.number> €</s>
+            </f:if>
+            <strong><s:format.price value="{product.priceInCents}" /></strong>
+        </p>
+
+        <p class="product-card__tax">
+            inkl. <f:format.number decimals="0">{product.taxRate}</f:format.number> % MwSt.
+            <f:if condition="{shippingNotePid}">
+                <f:then>
+                    zzgl. <f:link.page pageUid="{shippingNotePid}">Versandkosten</f:link.page>
+                </f:then>
+                <f:else>zzgl. Versandkosten</f:else>
+            </f:if>
+        </p>
+
+        <f:if condition="{product.availableStock} == 0">
+            <f:then>
+                <p class="product-card__state product-card__state--sold-out">Ausverkauft</p>
+            </f:then>
+            <f:else>
+                <f:if condition="{product.lowOnStock}">
+                    <p class="product-card__state product-card__state--low">Nur noch {product.stockLeft} verfügbar</p>
+                </f:if>
+            </f:else>
+        </f:if>
+    </div>
+</article>
+</html>

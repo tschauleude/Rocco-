@@ -1,0 +1,11 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{address}">
+    <address class="address">
+        <f:if condition="{address.company}">{address.company}<br /></f:if>
+        <f:if condition="{address.salutationLabel}">{address.salutationLabel} </f:if>{address.fullName}<br />
+        {address.street} {address.houseNumber}<br />
+        {address.zip} {address.city}<br />
+        {address.countryLabel}
+    </address>
+</f:if>
+</html>

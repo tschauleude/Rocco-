@@ -1,0 +1,25 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Marian\Shop\:
+    resource: '../Classes/*'
+    exclude:
+      - '../Classes/Domain/Model/*'
+      - '../Classes/Domain/Cart/*'
+      - '../Classes/Domain/Checkout/*'
+      - '../Classes/Exception/*'
+      - '../Classes/Payment/PaymentResult.php'
+      - '../Classes/Payment/PaymentContext.php'
+
+  # Zahlungsarten melden sich über dieses Tag an. Eine weitere Zahlungsart
+  # braucht nichts weiter als diese Zeile – die Registry findet sie dann.
+  _instanceof:
+    Marian\Shop\Payment\PaymentProviderInterface:
+      tags: ['marianshop.payment_provider']
+
+  Marian\Shop\Payment\PaymentProviderRegistry:
+    arguments:
+      $providers: !tagged_iterator marianshop.payment_provider

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<T3DataStructure>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <sheetTitle>Artikel</sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.view>
+                        <label>Welche Ansicht zeigt dieses Plugin</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items>
+                                <numIndex index="0">
+                                    <label>Artikelliste</label>
+                                    <value>list</value>
+                                </numIndex>
+                            </items>
+                            <default>list</default>
+                        </config>
+                    </settings.view>
+                    <settings.productDetailPid>
+                        <label>Seite mit der Artikeldetailansicht</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.productDetailPid>
+                    <settings.cartPid>
+                        <label>Seite mit dem Warenkorb</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.cartPid>
+                    <settings.category>
+                        <label>Nur diese Kategorie zeigen</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>sys_category</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.category>
+                    <settings.limit>
+                        <label>Höchstzahl Artikel (0 = alle)</label>
+                        <config>
+                            <type>number</type>
+                            <size>6</size>
+                            <range><lower>0</lower></range>
+                            <default>0</default>
+                        </config>
+                    </settings.limit>
+                    <settings.featuredLimit>
+                        <label>Anzahl hervorgehobener Artikel</label>
+                        <config>
+                            <type>number</type>
+                            <size>6</size>
+                            <range><lower>0</lower><upper>12</upper></range>
+                            <default>3</default>
+                        </config>
+                    </settings.featuredLimit>
+                </el>
+            </ROOT>
+        </sDEF>
+    </sheets>
+</T3DataStructure>

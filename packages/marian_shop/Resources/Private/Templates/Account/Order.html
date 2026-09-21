@@ -1,0 +1,49 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <div class="account">
+        <h1>Bestellung {order.orderNumber}</h1>
+        <f:render partial="Account/Navigation" arguments="{active: 'orders'}" />
+
+        <p class="account__meta">
+            <f:format.date format="d.m.Y H:i">{order.orderedAt}</f:format.date> Uhr ·
+            <span class="badge badge--{order.status}">{order.statusLabel}</span>
+            <span class="badge badge--payment-{order.paymentStatus}">{order.paymentStatusLabel}</span>
+        </p>
+
+        <f:if condition="{payment.instructions}">
+            <f:if condition="{order.isPaid} == 0">
+                <section class="notice notice--info">
+                    <strong>{payment.title}</strong>
+                    <p><f:format.nl2br>{payment.instructions}</f:format.nl2br></p>
+                </section>
+            </f:if>
+        </f:if>
+
+        <f:render partial="Order/Items" arguments="{order: order}" />
+
+        <section class="order-confirmation__addresses">
+            <div>
+                <h2>Rechnungsanschrift</h2>
+                <f:render partial="Order/Address" arguments="{address: order.billingAddress}" />
+            </div>
+            <f:if condition="{order.shippingAddress}">
+                <div>
+                    <h2>Lieferanschrift</h2>
+                    <f:render partial="Order/Address" arguments="{address: order.shippingAddress}" />
+                </div>
+            </f:if>
+        </section>
+
+        <f:if condition="{order.customerNote}">
+            <section>
+                <h2>Deine Nachricht</h2>
+                <p><f:format.nl2br>{order.customerNote}</f:format.nl2br></p>
+            </section>
+        </f:if>
+
+        <p><f:link.action action="orders">Zurück zur Übersicht</f:link.action></p>
+    </div>
+</f:section>
+</html>

@@ -1,0 +1,31 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <f:variable name="detailPid" value="{settings.productDetailPid}" />
+
+    <f:if condition="{featured}">
+        <section class="shop-featured">
+            <h2 class="shop-featured__title">Empfohlen</h2>
+            <div class="product-grid">
+                <f:for each="{featured}" as="product">
+                    <f:render partial="Product/Card" arguments="{product: product, detailPid: detailPid, settings: settings}" />
+                </f:for>
+            </div>
+        </section>
+    </f:if>
+
+    <f:if condition="{products}">
+        <f:then>
+            <div class="product-grid">
+                <f:for each="{products}" as="product">
+                    <f:render partial="Product/Card" arguments="{product: product, detailPid: detailPid, settings: settings}" />
+                </f:for>
+            </div>
+        </f:then>
+        <f:else>
+            <p class="notice">Im Shop ist gerade nichts eingeräumt.</p>
+        </f:else>
+    </f:if>
+</f:section>
+</html>

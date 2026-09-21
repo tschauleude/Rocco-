@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fef3f515a1698ba559dc6b4dbb5c036a",
+    "content-hash": "39f007401581106d7d1c285ef9c6ee20",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1239,6 +1239,41 @@
                 "GPL-2.0-or-later"
             ],
             "description": "Marians Werkstatt: Abi-Organisation, Wiki/Journalismus, Sensorik und Projekte als TYPO3-Extension.",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "marian/shop",
+            "version": "dev-claude/marian-typo3-projects-yp9qbg",
+            "dist": {
+                "type": "path",
+                "url": "packages/marian_shop",
+                "reference": "9d36029d2e10c835dbd62455d7c988b9958908bd"
+            },
+            "require": {
+                "php": "^8.2",
+                "typo3/cms-core": "^13.4",
+                "typo3/cms-extbase": "^13.4",
+                "typo3/cms-fluid": "^13.4",
+                "typo3/cms-frontend": "^13.4"
+            },
+            "type": "typo3-cms-extension",
+            "extra": {
+                "typo3/cms": {
+                    "extension-key": "marian_shop"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Marian\\Shop\\": "Classes/"
+                }
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Onlineshop für Marians Werkstatt: Katalog, Warenkorb, Kasse, Kundenkonto und Zahlung.",
             "transport-options": {
                 "symlink": true,
                 "relative": true
@@ -6198,6 +6233,64 @@
             "time": "2026-09-08T09:27:03+00:00"
         },
         {
+            "name": "typo3/cms-felogin",
+            "version": "v13.4.35",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TYPO3-CMS/felogin.git",
+                "reference": "ae90ac26119a2e9ccbe3f172f938115db2c3273a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TYPO3-CMS/felogin/zipball/ae90ac26119a2e9ccbe3f172f938115db2c3273a",
+                "reference": "ae90ac26119a2e9ccbe3f172f938115db2c3273a",
+                "shasum": ""
+            },
+            "require": {
+                "typo3/cms-core": "13.4.35"
+            },
+            "conflict": {
+                "typo3/cms": "*"
+            },
+            "type": "typo3-cms-framework",
+            "extra": {
+                "typo3/cms": {
+                    "Package": {
+                        "partOfFactoryDefault": true
+                    },
+                    "extension-key": "felogin"
+                },
+                "branch-alias": {
+                    "dev-main": "13.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TYPO3\\CMS\\FrontendLogin\\": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "TYPO3 Core Team",
+                    "email": "typo3cms@typo3.org",
+                    "role": "Developer"
+                }
+            ],
+            "description": "TYPO3 CMS Frontend Login - A template-based plugin to log in website users in the TYPO3 frontend.",
+            "homepage": "https://typo3.org",
+            "support": {
+                "chat": "https://typo3.org/help",
+                "docs": "https://docs.typo3.org/c/typo3/cms-felogin/main/en-us",
+                "issues": "https://forge.typo3.org",
+                "source": "https://github.com/typo3/typo3"
+            },
+            "time": "2026-09-08T09:27:03+00:00"
+        },
+        {
             "name": "typo3/cms-filelist",
             "version": "v13.4.35",
             "source": {
@@ -10257,6 +10350,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "marian/hub": 20,
+        "marian/shop": 20,
         "marian/sitepackage": 20
     },
     "prefer-stable": false,

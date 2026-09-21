@@ -1,0 +1,82 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<fieldset class="address-fields">
+    <div class="field field--narrow">
+        <label for="{prefix}-salutation">Anrede</label>
+        <select id="{prefix}-salutation" name="tx_marianshop_checkout[{prefix}][salutation]">
+            <f:for each="{salutations}" as="label" key="value">
+                <option value="{value}" <f:if condition="{values.{prefix}.salutation} == {value}">selected="selected"</f:if>>{label}</option>
+            </f:for>
+        </select>
+    </div>
+
+    <div class="field">
+        <label for="{prefix}-firstName">Vorname <abbr title="Pflichtfeld">*</abbr></label>
+        <input type="text" id="{prefix}-firstName" name="tx_marianshop_checkout[{prefix}][firstName]"
+               value="{values.{prefix}.firstName}" autocomplete="given-name"
+               aria-invalid="{f:if(condition: errors.{prefix}_firstName, then: 'true', else: 'false')}" />
+        <f:if condition="{errors.{prefix}_firstName}">
+            <p class="field__error">{errors.{prefix}_firstName}</p>
+        </f:if>
+    </div>
+
+    <div class="field">
+        <label for="{prefix}-lastName">Nachname <abbr title="Pflichtfeld">*</abbr></label>
+        <input type="text" id="{prefix}-lastName" name="tx_marianshop_checkout[{prefix}][lastName]"
+               value="{values.{prefix}.lastName}" autocomplete="family-name" />
+        <f:if condition="{errors.{prefix}_lastName}">
+            <p class="field__error">{errors.{prefix}_lastName}</p>
+        </f:if>
+    </div>
+
+    <div class="field field--wide">
+        <label for="{prefix}-company">Firma (optional)</label>
+        <input type="text" id="{prefix}-company" name="tx_marianshop_checkout[{prefix}][company]"
+               value="{values.{prefix}.company}" autocomplete="organization" />
+    </div>
+
+    <div class="field">
+        <label for="{prefix}-street">Straße <abbr title="Pflichtfeld">*</abbr></label>
+        <input type="text" id="{prefix}-street" name="tx_marianshop_checkout[{prefix}][street]"
+               value="{values.{prefix}.street}" autocomplete="address-line1" />
+        <f:if condition="{errors.{prefix}_street}">
+            <p class="field__error">{errors.{prefix}_street}</p>
+        </f:if>
+    </div>
+
+    <div class="field field--narrow">
+        <label for="{prefix}-houseNumber">Hausnummer <abbr title="Pflichtfeld">*</abbr></label>
+        <input type="text" id="{prefix}-houseNumber" name="tx_marianshop_checkout[{prefix}][houseNumber]"
+               value="{values.{prefix}.houseNumber}" />
+        <f:if condition="{errors.{prefix}_houseNumber}">
+            <p class="field__error">{errors.{prefix}_houseNumber}</p>
+        </f:if>
+    </div>
+
+    <div class="field field--narrow">
+        <label for="{prefix}-zip">PLZ <abbr title="Pflichtfeld">*</abbr></label>
+        <input type="text" id="{prefix}-zip" name="tx_marianshop_checkout[{prefix}][zip]"
+               value="{values.{prefix}.zip}" inputmode="numeric" autocomplete="postal-code" />
+        <f:if condition="{errors.{prefix}_zip}">
+            <p class="field__error">{errors.{prefix}_zip}</p>
+        </f:if>
+    </div>
+
+    <div class="field">
+        <label for="{prefix}-city">Ort <abbr title="Pflichtfeld">*</abbr></label>
+        <input type="text" id="{prefix}-city" name="tx_marianshop_checkout[{prefix}][city]"
+               value="{values.{prefix}.city}" autocomplete="address-level2" />
+        <f:if condition="{errors.{prefix}_city}">
+            <p class="field__error">{errors.{prefix}_city}</p>
+        </f:if>
+    </div>
+
+    <div class="field">
+        <label for="{prefix}-country">Land</label>
+        <select id="{prefix}-country" name="tx_marianshop_checkout[{prefix}][country]">
+            <f:for each="{countries}" as="label" key="code">
+                <option value="{code}" <f:if condition="{values.{prefix}.country} == {code}">selected="selected"</f:if>>{label}</option>
+            </f:for>
+        </select>
+    </div>
+</fieldset>
+</html>

@@ -1,0 +1,23 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <div class="order-confirmation">
+        <h1 class="order-confirmation__title">Zahlung abgebrochen</h1>
+
+        <p class="order-confirmation__lead">
+            Deine Bestellung {order.orderNumber} liegt bei uns, ist aber noch nicht bezahlt.
+            Wir haben nichts abgebucht.
+        </p>
+
+        <p>
+            Wenn du die Bestellung doch abschließen möchtest, melde dich kurz –
+            oder leg die Sachen einfach neu in den Warenkorb.
+        </p>
+
+        <f:if condition="{shopPid}">
+            <p><f:link.page pageUid="{shopPid}" class="button button--primary">Zurück zum Shop</f:link.page></p>
+        </f:if>
+    </div>
+</f:section>
+</html>

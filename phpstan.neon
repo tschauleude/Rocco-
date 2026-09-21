@@ -3,6 +3,8 @@ parameters:
     paths:
         - packages/marian_hub/Classes
         - packages/marian_hub/Tests
+        - packages/marian_shop/Classes
+        - packages/marian_shop/Tests
     excludePaths:
         analyse:
             - packages/marian_hub/Documentation

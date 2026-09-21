@@ -8,6 +8,7 @@ Eine TYPO3-Seite, die vier Dinge gleichzeitig kann, ohne dass eines davon im Weg
 | **Wiki & Journalismus** | Artikel mit Quellenapparat, Wiki-Verlinkung, Register, Volltextsuche, Redaktionsstatus |
 | **Sensorik** | HTTP-API für Arduino/ESP, Live-Dashboard, Diagramme, Warnschwellen, Aufbewahrungsfristen |
 | **Projekte** | Projektübersicht nach Status, Logbuch, Stückliste, verknüpfte Sensoren |
+| **Shop** | Katalog mit Größen, Warenkorb, Kasse, Kundenkonto, Bestellungen, Zahlung per Stripe/Rechnung/Vorkasse |
 
 Die Bereiche greifen ineinander: Ein Artikel kann auf ein Projekt zeigen, ein Projekt
 auf seine Sensoren, ein Sensor zurück aufs Projekt.
@@ -19,6 +20,7 @@ composer.json                    TYPO3 v13.4 als Composer-Projekt
 config/sites/marian/             Site-Konfiguration inkl. sprechender URLs
 packages/marian_hub/             Die Funktionen: Modelle, Controller, API, Kommandos
 packages/marian_sitepackage/     Das Drumherum: Seitenlayouts, Navigation, Design
+packages/marian_shop/            Der Shop: Katalog, Warenkorb, Kasse, Konto, Zahlung
 ```
 
 ## Einrichten
@@ -73,6 +75,79 @@ Welche Ansicht ein Plugin zeigt, hängt an der Seite: Das Plugin „Wiki & Artik
 auf einer Seite die Liste und auf der Detailseite den Artikel – die Route entscheidet.
 Für „Register“ und „Suche“ eigene Seiten anlegen und im Plugin die jeweilige Aktion
 über die URL ansteuern (`/wiki/index`, `/wiki/suche`).
+
+## Der Shop
+
+Ausführlich in
+[`packages/marian_shop/Documentation/README.md`](packages/marian_shop/Documentation/README.md).
+Das Wichtigste:
+
+### Vor dem ersten echten Verkauf
+
+Ein Shop, der an Verbraucher verkauft, hat Pflichten. Die **Mechanik** dafür ist
+eingebaut, die **Texte** nicht – die kann dir niemand abnehmen:
+
+- **Impressum, AGB, Widerrufsbelehrung, Datenschutzerklärung** schreiben und auf
+  die dafür angelegten Seiten setzen. Die mitgelieferten Texte sind ausdrücklich
+  als Platzhalter markiert.
+- In der Kasse sind die Kästchen für AGB und Widerrufsbelehrung Pflicht, der
+  Bestellknopf heißt „Zahlungspflichtig bestellen", und die wesentlichen Angaben
+  stehen unmittelbar darüber. **Diese Beschriftung bitte nicht ändern** – sie ist
+  in § 312j Abs. 3 BGB so vorgeschrieben.
+- Preise sind Bruttopreise, die Umsatzsteuer wird je Satz ausgewiesen,
+  Versandkosten stehen dabei.
+- Wer regelmäßig verkauft, betreibt ein Gewerbe. Das ist keine Frage der
+  Software, sondern eine ans Finanzamt.
+
+### Zahlungsarten
+
+| Kennung | Ablauf |
+|---------|--------|
+| `invoice` | Rechnung, liegt der Lieferung bei |
+| `prepayment` | Vorkasse, Bankverbindung steht am Datensatz |
+| `stripe` | Stripe Checkout: Karte, Apple Pay, Google Pay |
+
+Stripe braucht zwei Schlüssel. Sie gehören **nicht** ins Repository:
+
+```bash
+export STRIPE_SECRET_KEY=sk_live_...
+export STRIPE_WEBHOOK_SECRET=whsec_...
+```
+
+Ersatzweise gehen sie in die Extension-Konfiguration (Admin Tools → Settings →
+Extension Configuration → marian_shop); die Umgebungsvariable gewinnt.
+
+Der Webhook-Endpunkt ist `/api/shop/stripe-webhook`. Diese Adresse im
+Stripe-Dashboard eintragen und die Ereignisse `checkout.session.completed`,
+`checkout.session.expired` und `checkout.session.async_payment_*` abonnieren.
+**Ob eine Bestellung bezahlt ist, erfährt der Shop nur von dort** – die Rückkehr
+des Kunden im Browser kann jeder aufrufen, den signierten Webhook nur Stripe.
+
+Eine weitere Zahlungsart (PayPal, Mollie, …) ist eine Klasse, die
+`PaymentProviderInterface` umsetzt, plus ein Datensatz im Backend. Am
+Bestellablauf ändert sich nichts.
+
+### Wichtige Details
+
+- **Beträge** werden als ganzzahlige Cent geführt. Fließkomma und Geld vertragen
+  sich nicht.
+- **Versandkosten** werden bei gemischten Steuersätzen anteilig aufgeteilt, wie
+  es das Umsatzsteuerrecht verlangt – nicht pauschal mit 19 % belegt.
+- **Preise** stehen nie in der Sitzung. Der Warenkorb merkt sich nur Artikel-ID
+  und Menge; gerechnet wird bei jedem Aufruf frisch aus dem Katalog.
+- **Bestellungen** frieren Titel, Artikelnummer, Preis und Anschrift ein. Eine
+  spätere Preisänderung verfälscht keine alte Bestellung.
+- **Bestand** wird beim Bestellen in einem bedingten UPDATE abgebucht, damit
+  zwei gleichzeitige Bestellungen nicht dasselbe letzte Stück bekommen.
+- **Kundenkonten** sind TYPO3-Frontend-Benutzer. Anmeldung, Passwort-Hashing und
+  Sitzung macht der Kern; die Extension baut daran nichts Eigenes.
+- Neue Konten sind bis zur Bestätigung per E-Mail gesperrt (Double Opt-in).
+
+### Einstellungen
+
+In den Site-Einstellungen unter `marianshop.*`: Ordner für Artikel und
+Bestellungen, Benutzergruppe neuer Konten und die Seiten-IDs für Shop,
+Warenkorb, Kasse, Konto und die Rechtstexte.
 
 ## Sensoren anschließen
 

@@ -1,0 +1,34 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:section name="Main">
+Danke für deine Bestellung
+
+Hallo {order.billingAddress.fullName},
+wir haben deine Bestellung {order.orderNumber} vom <f:format.date format="d.m.Y">{order.orderedAt}</f:format.date> erhalten.
+<f:if condition="{instructions}">
+
+{payment.title}
+{instructions}
+</f:if>
+
+Positionen
+----------
+<f:for each="{order.items}" as="item">{item.quantity} x {item.fullTitle} — {item.formattedLineTotal}
+</f:for>
+Zwischensumme: {order.formattedSubtotal}
+Versand ({order.shippingTitle}): {order.formattedShipping}
+Gesamtsumme: {order.formattedTotal}
+davon Umsatzsteuer: {order.formattedTax}
+
+Rechnungsanschrift
+------------------
+{order.billingAddress.fullName}
+{order.billingAddress.street} {order.billingAddress.houseNumber}
+{order.billingAddress.zip} {order.billingAddress.city}
+<f:if condition="{orderUrl}">
+
+Bestellung online ansehen: {orderUrl}
+</f:if>
+
+{shopName}
+</f:section>
+</html>

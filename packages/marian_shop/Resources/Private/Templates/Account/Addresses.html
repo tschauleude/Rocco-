@@ -1,0 +1,83 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <div class="account">
+        <h1>Adressbuch</h1>
+        <f:render partial="Account/Navigation" arguments="{active: 'addresses'}" />
+
+        <f:if condition="{addresses}">
+            <ul class="address-list">
+                <f:for each="{addresses}" as="address">
+                    <li class="address-list__item {f:if(condition: address.isDefault, then: 'is-default')}">
+                        <f:render partial="Order/Address" arguments="{address: address}" />
+                        <f:if condition="{address.isDefault}">
+                            <p class="address-list__badge">Standardanschrift</p>
+                        </f:if>
+                        <form method="post" action="{f:uri.action(action: 'deleteAddress')}">
+                            <input type="hidden" name="tx_marianshop_account[uid]" value="{address.uid}" />
+                            <button type="submit" class="button button--quiet">Entfernen</button>
+                        </form>
+                    </li>
+                </f:for>
+            </ul>
+        </f:if>
+
+        <section class="account__section">
+            <h2>Neue Adresse</h2>
+            <form method="post" action="{f:uri.action(action: 'saveAddress')}" class="address-form">
+                <div class="field">
+                    <label for="addr-salutation">Anrede</label>
+                    <select id="addr-salutation" name="tx_marianshop_account[address][salutation]">
+                        <f:for each="{salutations}" as="label" key="value">
+                            <option value="{value}">{label}</option>
+                        </f:for>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="addr-firstName">Vorname <abbr title="Pflichtfeld">*</abbr></label>
+                    <input type="text" id="addr-firstName" name="tx_marianshop_account[address][firstName]" />
+                </div>
+                <div class="field">
+                    <label for="addr-lastName">Nachname <abbr title="Pflichtfeld">*</abbr></label>
+                    <input type="text" id="addr-lastName" name="tx_marianshop_account[address][lastName]" />
+                </div>
+                <div class="field field--wide">
+                    <label for="addr-company">Firma (optional)</label>
+                    <input type="text" id="addr-company" name="tx_marianshop_account[address][company]" />
+                </div>
+                <div class="field">
+                    <label for="addr-street">Straße <abbr title="Pflichtfeld">*</abbr></label>
+                    <input type="text" id="addr-street" name="tx_marianshop_account[address][street]" />
+                </div>
+                <div class="field field--narrow">
+                    <label for="addr-houseNumber">Hausnummer <abbr title="Pflichtfeld">*</abbr></label>
+                    <input type="text" id="addr-houseNumber" name="tx_marianshop_account[address][houseNumber]" />
+                </div>
+                <div class="field field--narrow">
+                    <label for="addr-zip">PLZ <abbr title="Pflichtfeld">*</abbr></label>
+                    <input type="text" id="addr-zip" name="tx_marianshop_account[address][zip]" inputmode="numeric" />
+                </div>
+                <div class="field">
+                    <label for="addr-city">Ort <abbr title="Pflichtfeld">*</abbr></label>
+                    <input type="text" id="addr-city" name="tx_marianshop_account[address][city]" />
+                </div>
+                <div class="field">
+                    <label for="addr-country">Land</label>
+                    <select id="addr-country" name="tx_marianshop_account[address][country]">
+                        <f:for each="{countries}" as="label" key="code">
+                            <option value="{code}">{label}</option>
+                        </f:for>
+                    </select>
+                </div>
+                <div class="field field--check field--wide">
+                    <input type="checkbox" id="addr-default" name="tx_marianshop_account[address][isDefault]" value="1" />
+                    <label for="addr-default">Als Standardanschrift verwenden</label>
+                </div>
+
+                <button type="submit" class="button button--primary">Adresse speichern</button>
+            </form>
+        </section>
+    </div>
+</f:section>
+</html>

@@ -1,0 +1,4 @@
+name: marian/shop
+label: 'Marians Werkstatt – Shop'
+dependencies:
+  - typo3/fluid-styled-content

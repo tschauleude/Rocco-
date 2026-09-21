@@ -1,0 +1,11 @@
+# cat=shop/basic/10; type=string; label=Shop-Name: Erscheint als Absender in E-Mails
+shopName = Marians Werkstatt
+
+# cat=shop/basic/20; type=string; label=Benachrichtigungsadresse: Hierhin geht eine Mail bei jeder Bestellung
+notificationEmail =
+
+# cat=stripe/enable/10; type=string; label=Stripe Secret Key: Besser über die Umgebungsvariable STRIPE_SECRET_KEY setzen, damit der Schlüssel nicht in der Datenbank steht
+stripeSecretKey =
+
+# cat=stripe/enable/20; type=string; label=Stripe Webhook Secret: Besser über die Umgebungsvariable STRIPE_WEBHOOK_SECRET setzen
+stripeWebhookSecret =

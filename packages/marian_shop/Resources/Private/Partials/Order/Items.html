@@ -1,0 +1,53 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<table class="order-items">
+    <thead>
+        <tr>
+            <th>Artikel</th>
+            <th class="is-numeric">Menge</th>
+            <th class="is-numeric">Einzelpreis</th>
+            <th class="is-numeric">Summe</th>
+        </tr>
+    </thead>
+    <tbody>
+        <f:for each="{order.items}" as="item">
+            <tr>
+                <td>
+                    {item.fullTitle}
+                    <f:if condition="{item.sku}">
+                        <span class="order-items__sku">{item.sku}</span>
+                    </f:if>
+                </td>
+                <td class="is-numeric">{item.quantity}</td>
+                <td class="is-numeric">{item.formattedUnitPrice}</td>
+                <td class="is-numeric">{item.formattedLineTotal}</td>
+            </tr>
+        </f:for>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="3">Zwischensumme</th>
+            <td class="is-numeric">{order.formattedSubtotal}</td>
+        </tr>
+        <tr>
+            <th colspan="3">Versand ({order.shippingTitle})</th>
+            <td class="is-numeric">{order.formattedShipping}</td>
+        </tr>
+        <f:if condition="{order.paymentSurchargeGross} > 0">
+            <tr>
+                <th colspan="3">Zahlungsaufschlag</th>
+                <td class="is-numeric">{order.formattedSurcharge}</td>
+            </tr>
+        </f:if>
+        <tr class="order-items__total">
+            <th colspan="3">Gesamtsumme</th>
+            <td class="is-numeric">{order.formattedTotal}</td>
+        </tr>
+        <f:for each="{order.taxRows}" as="row" key="rate">
+            <tr class="order-items__tax">
+                <th colspan="3">davon {rate -> f:format.number(decimals: 0)} % MwSt.</th>
+                <td class="is-numeric"><f:format.number decimals="2" decimalSeparator="," thousandsSeparator=".">{row.tax / 100}</f:format.number> €</td>
+            </tr>
+        </f:for>
+    </tfoot>
+</table>
+</html>

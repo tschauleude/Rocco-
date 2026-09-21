@@ -1,0 +1,8 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<nav class="account-nav" aria-label="Kundenkonto">
+    <f:link.action action="overview" class="account-nav__link {f:if(condition: '{active} == \'overview\'', then: 'is-active')}">Übersicht</f:link.action>
+    <f:link.action action="orders" class="account-nav__link {f:if(condition: '{active} == \'orders\'', then: 'is-active')}">Bestellungen</f:link.action>
+    <f:link.action action="addresses" class="account-nav__link {f:if(condition: '{active} == \'addresses\'', then: 'is-active')}">Adressen</f:link.action>
+    <f:link.action action="profile" class="account-nav__link {f:if(condition: '{active} == \'profile\'', then: 'is-active')}">Profil</f:link.action>
+</nav>
+</html>

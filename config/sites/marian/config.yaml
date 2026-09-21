@@ -3,6 +3,7 @@ base: 'https://marian.ddev.site/'
 websiteTitle: 'Marians Werkstatt'
 dependencies:
   - marian/site
+  - marian/shop
 languages:
   - title: Deutsch
     enabled: true
@@ -23,6 +24,23 @@ routes:
       User-agent: *
       Allow: /
 routeEnhancers:
+  ShopProducts:
+    type: Extbase
+    extension: MarianShop
+    plugin: Products
+    routes:
+      - routePath: '/'
+        _controller: 'Product::list'
+      - routePath: '/{product_slug}'
+        _controller: 'Product::show'
+        _arguments:
+          product_slug: product
+    defaultController: 'Product::list'
+    aspects:
+      product_slug:
+        type: PersistedAliasMapper
+        tableName: tx_marianshop_domain_model_product
+        routeFieldName: slug
   Wiki:
     type: Extbase
     extension: MarianHub

@@ -1,0 +1,51 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <div class="account">
+        <h1>Profil</h1>
+        <f:render partial="Account/Navigation" arguments="{active: 'profile'}" />
+
+        <form method="post" action="{f:uri.action(action: 'saveProfile')}">
+            <div class="field">
+                <label for="p-firstName">Vorname</label>
+                <input type="text" id="p-firstName" name="tx_marianshop_account[firstName]" value="{customer.firstName}" />
+            </div>
+
+            <div class="field">
+                <label for="p-lastName">Nachname</label>
+                <input type="text" id="p-lastName" name="tx_marianshop_account[lastName]" value="{customer.lastName}" />
+            </div>
+
+            <div class="field">
+                <label for="p-phone">Telefon</label>
+                <input type="tel" id="p-phone" name="tx_marianshop_account[phone]" value="{customer.phone}" />
+            </div>
+
+            <div class="field">
+                <label>E-Mail</label>
+                <p class="field__static">{customer.email}</p>
+                <p class="field__help">Die E-Mail-Adresse ist zugleich dein Anmeldename und lässt sich hier nicht ändern.</p>
+            </div>
+
+            <fieldset class="field--wide">
+                <legend>Passwort ändern (leer lassen, um es zu behalten)</legend>
+
+                <div class="field">
+                    <label for="p-password">Neues Passwort</label>
+                    <input type="password" id="p-password" name="tx_marianshop_account[password]"
+                           autocomplete="new-password" minlength="8" />
+                </div>
+
+                <div class="field">
+                    <label for="p-password2">Wiederholen</label>
+                    <input type="password" id="p-password2" name="tx_marianshop_account[passwordRepeat]"
+                           autocomplete="new-password" />
+                </div>
+            </fieldset>
+
+            <button type="submit" class="button button--primary">Speichern</button>
+        </form>
+    </div>
+</f:section>
+</html>

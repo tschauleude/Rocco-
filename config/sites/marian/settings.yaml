@@ -11,3 +11,15 @@ marianSite:
   claim: 'Abi, Artikel, Arduino – alles an einem Ort'
   navigationLevels: 2
   footerText: 'Marians Werkstatt – gebaut mit TYPO3.'
+marianshop:
+  storagePid: 21
+  catalogPid: 21
+  customerGroup: 1
+  shopPid: 13
+  productDetailPid: 14
+  cartPid: 15
+  checkoutPid: 16
+  accountPid: 17
+  termsPid: 18
+  withdrawalPid: 19
+  privacyPid: 20

@@ -6,6 +6,7 @@
     "require": {
         "php": "^8.2",
         "marian/hub": "@dev",
+        "marian/shop": "@dev",
         "marian/sitepackage": "@dev",
         "typo3/cms-backend": "^13.4",
         "typo3/cms-belog": "^13.4",
@@ -14,6 +15,7 @@
         "typo3/cms-dashboard": "^13.4",
         "typo3/cms-extbase": "^13.4",
         "typo3/cms-extensionmanager": "^13.4",
+        "typo3/cms-felogin": "^13.4",
         "typo3/cms-filelist": "^13.4",
         "typo3/cms-fluid": "^13.4",
         "typo3/cms-fluid-styled-content": "^13.4",
@@ -43,7 +45,8 @@
     ],
     "autoload-dev": {
         "psr-4": {
-            "Marian\\Hub\\Tests\\": "packages/marian_hub/Tests/"
+            "Marian\\Hub\\Tests\\": "packages/marian_hub/Tests/",
+            "Marian\\Shop\\Tests\\": "packages/marian_shop/Tests/"
         }
     },
     "config": {

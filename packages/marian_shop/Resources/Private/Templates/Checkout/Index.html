@@ -1,0 +1,220 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:s="http://typo3.org/ns/Marian/Shop/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <f:if condition="{errors.cart}">
+        <p class="notice notice--error">{errors.cart}</p>
+    </f:if>
+
+    <form class="checkout" method="post" action="{f:uri.action(action: 'place')}">
+        <div class="checkout__main">
+            <section class="checkout__section">
+                <h2>Kontakt</h2>
+
+                <f:if condition="{isLoggedIn} == 0">
+                    <p class="checkout__hint">
+                        Du hast schon ein Konto?
+                        <f:link.action action="login" controller="Account" pageUid="{settings.accountPid}"
+                                       extensionName="MarianShop" pluginName="Account">Hier anmelden</f:link.action> –
+                        dann sind deine Daten schon ausgefüllt.
+                    </p>
+                </f:if>
+
+                <div class="field">
+                    <label for="email">E-Mail <abbr title="Pflichtfeld">*</abbr></label>
+                    <input type="email" id="email" name="tx_marianshop_checkout[email]"
+                           value="{values.email}" autocomplete="email" required="required" />
+                    <p class="field__help">Hierhin geht die Bestellbestätigung.</p>
+                    <f:if condition="{errors.email}">
+                        <p class="field__error">{errors.email}</p>
+                    </f:if>
+                </div>
+
+                <div class="field">
+                    <label for="phone">Telefon (optional)</label>
+                    <input type="tel" id="phone" name="tx_marianshop_checkout[phone]"
+                           value="{values.phone}" autocomplete="tel" />
+                    <p class="field__help">Nur für Rückfragen zur Lieferung.</p>
+                </div>
+            </section>
+
+            <section class="checkout__section">
+                <h2>Rechnungsanschrift</h2>
+                <f:render partial="Checkout/AddressFields"
+                          arguments="{prefix: 'billing', values: values, errors: errors, salutations: salutations, countries: countries}" />
+
+                <div class="field field--check">
+                    <input type="checkbox" id="shippingDiffers" name="tx_marianshop_checkout[shippingDiffers]" value="1"
+                           data-toggle-target="#shipping-address"
+                           <f:if condition="{values.shippingDiffers}">checked="checked"</f:if> />
+                    <label for="shippingDiffers">Die Lieferadresse weicht von der Rechnungsadresse ab</label>
+                </div>
+            </section>
+
+            <section class="checkout__section" id="shipping-address" <f:if condition="{values.shippingDiffers} == 0">hidden="hidden"</f:if>>
+                <h2>Lieferanschrift</h2>
+                <f:render partial="Checkout/AddressFields"
+                          arguments="{prefix: 'shipping', values: values, errors: errors, salutations: salutations, countries: countries}" />
+            </section>
+
+            <section class="checkout__section">
+                <h2>Versand</h2>
+                <f:if condition="{errors.shippingMethod}">
+                    <p class="field__error">{errors.shippingMethod}</p>
+                </f:if>
+
+                <f:for each="{shippingMethods}" as="method">
+                    <div class="choice">
+                        <input type="radio" id="shipping-{method.uid}" name="tx_marianshop_checkout[shippingMethod]"
+                               value="{method.uid}" data-price="{method.priceInCents}" data-free-from="{method.freeFromInCents}"
+                               <f:if condition="{selectedShipping} == {method.uid}">checked="checked"</f:if> />
+                        <label for="shipping-{method.uid}">
+                            <span class="choice__title">{method.title}</span>
+                            <span class="choice__price">
+                                <f:if condition="{method.price} > 0">
+                                    <f:then><s:format.price value="{method.priceInCents}" /></f:then>
+                                    <f:else>kostenlos</f:else>
+                                </f:if>
+                            </span>
+                            <f:if condition="{method.description}">
+                                <span class="choice__description">{method.description}</span>
+                            </f:if>
+                            <f:if condition="{method.freeFrom} > 0">
+                                <span class="choice__description">Versandfrei ab <s:format.price value="{method.freeFromInCents}" /></span>
+                            </f:if>
+                        </label>
+                    </div>
+                </f:for>
+            </section>
+
+            <section class="checkout__section">
+                <h2>Zahlung</h2>
+                <f:if condition="{errors.paymentMethod}">
+                    <p class="field__error">{errors.paymentMethod}</p>
+                </f:if>
+
+                <f:for each="{paymentMethods}" as="method">
+                    <div class="choice">
+                        <input type="radio" id="payment-{method.uid}" name="tx_marianshop_checkout[paymentMethod]"
+                               value="{method.uid}" data-surcharge="{method.surchargeInCents}"
+                               <f:if condition="{selectedPayment} == {method.uid}">checked="checked"</f:if> />
+                        <label for="payment-{method.uid}">
+                            <span class="choice__title">{method.title}</span>
+                            <f:if condition="{method.surcharge} > 0">
+                                <span class="choice__price">+ <s:format.price value="{method.surchargeInCents}" /></span>
+                            </f:if>
+                            <f:if condition="{method.description}">
+                                <span class="choice__description">{method.description}</span>
+                            </f:if>
+                        </label>
+                    </div>
+                </f:for>
+            </section>
+
+            <section class="checkout__section">
+                <h2>Nachricht (optional)</h2>
+                <div class="field field--wide">
+                    <label class="is-visually-hidden" for="note">Nachricht an uns</label>
+                    <textarea id="note" name="tx_marianshop_checkout[note]" rows="3">{values.note}</textarea>
+                </div>
+            </section>
+
+            <f:if condition="{isLoggedIn} == 0">
+                <section class="checkout__section">
+                    <h2>Kundenkonto</h2>
+                    <div class="field field--check">
+                        <input type="checkbox" id="createAccount" name="tx_marianshop_checkout[createAccount]" value="1"
+                               data-toggle-target="#account-password"
+                               <f:if condition="{values.createAccount}">checked="checked"</f:if> />
+                        <label for="createAccount">Konto anlegen, damit ich künftig schneller bestellen kann</label>
+                    </div>
+                    <f:if condition="{errors.createAccount}">
+                        <p class="field__error">{errors.createAccount}</p>
+                    </f:if>
+
+                    <div class="field" id="account-password" <f:if condition="{values.createAccount} == 0">hidden="hidden"</f:if>>
+                        <label for="password">Passwort</label>
+                        <input type="password" id="password" name="tx_marianshop_checkout[password]"
+                               autocomplete="new-password" minlength="8" />
+                        <p class="field__help">Mindestens acht Zeichen. Du bekommst eine E-Mail zum Bestätigen.</p>
+                        <f:if condition="{errors.password}">
+                            <p class="field__error">{errors.password}</p>
+                        </f:if>
+                    </div>
+                </section>
+            </f:if>
+        </div>
+
+        <aside class="checkout__aside">
+            <section class="checkout__summary">
+                <h2>Deine Bestellung</h2>
+
+                <ul class="checkout__items">
+                    <f:for each="{cart.items}" as="item">
+                        <li>
+                            <span class="checkout__item-qty">{item.quantity} ×</span>
+                            <span class="checkout__item-title">{item.fullTitle}</span>
+                            <span class="checkout__item-price">{item.formattedLineTotal}</span>
+                        </li>
+                    </f:for>
+                </ul>
+
+                <f:render partial="Cart/Summary" arguments="{totals: totals}" />
+
+                <div class="checkout__legal">
+                    <div class="field field--check">
+                        <input type="checkbox" id="acceptTerms" name="tx_marianshop_checkout[acceptTerms]" value="1"
+                               <f:if condition="{values.acceptTerms}">checked="checked"</f:if> />
+                        <label for="acceptTerms">
+                            Ich habe die
+                            <f:if condition="{termsPid}">
+                                <f:then><f:link.page pageUid="{termsPid}" target="_blank">AGB</f:link.page></f:then>
+                                <f:else>AGB</f:else>
+                            </f:if>
+                            gelesen und bin damit einverstanden. <abbr title="Pflichtfeld">*</abbr>
+                        </label>
+                    </div>
+                    <f:if condition="{errors.acceptTerms}">
+                        <p class="field__error">{errors.acceptTerms}</p>
+                    </f:if>
+
+                    <div class="field field--check">
+                        <input type="checkbox" id="acceptWithdrawal" name="tx_marianshop_checkout[acceptWithdrawal]" value="1"
+                               <f:if condition="{values.acceptWithdrawal}">checked="checked"</f:if> />
+                        <label for="acceptWithdrawal">
+                            Ich habe die
+                            <f:if condition="{withdrawalPid}">
+                                <f:then><f:link.page pageUid="{withdrawalPid}" target="_blank">Widerrufsbelehrung</f:link.page></f:then>
+                                <f:else>Widerrufsbelehrung</f:else>
+                            </f:if>
+                            zur Kenntnis genommen. <abbr title="Pflichtfeld">*</abbr>
+                        </label>
+                    </div>
+                    <f:if condition="{errors.acceptWithdrawal}">
+                        <p class="field__error">{errors.acceptWithdrawal}</p>
+                    </f:if>
+                </div>
+
+                <!--
+                    Der Knopf muss unmissverständlich sagen, dass eine Zahlungspflicht
+                    entsteht, und die wesentlichen Angaben müssen unmittelbar darüber
+                    stehen (§ 312j Abs. 2 und 3 BGB). Beschriftung bitte nicht ändern.
+                -->
+                <button type="submit" class="button button--primary button--large">
+                    Zahlungspflichtig bestellen
+                </button>
+
+                <p class="checkout__legal-note">
+                    Alle Preise inklusive Umsatzsteuer.
+                    <f:if condition="{privacyPid}">
+                        Zur Verarbeitung deiner Daten siehe die
+                        <f:link.page pageUid="{privacyPid}" target="_blank">Datenschutzerklärung</f:link.page>.
+                    </f:if>
+                </p>
+            </section>
+        </aside>
+    </form>
+</f:section>
+</html>

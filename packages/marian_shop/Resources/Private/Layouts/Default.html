@@ -1,0 +1,15 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<section class="shop">
+    <f:flashMessages as="messages">
+        <f:if condition="{messages}">
+            <ul class="shop-messages">
+                <f:for each="{messages}" as="message">
+                    <li class="shop-message shop-message--{message.severity.value}">{message.message}</li>
+                </f:for>
+            </ul>
+        </f:if>
+    </f:flashMessages>
+
+    <f:render section="Main" />
+</section>
+</html>

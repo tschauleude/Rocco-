@@ -1,0 +1,23 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <div class="account-register">
+        <f:if condition="{confirmed}">
+            <f:then>
+                <h1>Konto freigeschaltet</h1>
+                <p>Alles erledigt, {customer.displayName}. Du kannst dich jetzt anmelden.</p>
+                <p><f:link.action action="login" class="button button--primary">Zur Anmeldung</f:link.action></p>
+            </f:then>
+            <f:else>
+                <h1>Link ungültig</h1>
+                <p class="notice notice--error">
+                    Dieser Bestätigungslink ist abgelaufen oder wurde schon benutzt.
+                    Melde dich einfach an – vielleicht ist dein Konto längst aktiv.
+                </p>
+                <p><f:link.action action="login">Zur Anmeldung</f:link.action></p>
+            </f:else>
+        </f:if>
+    </div>
+</f:section>
+</html>
